@@ -1,7 +1,7 @@
 package com.kowalik.application.question;
 
 public class Question {
-	private String id;
+	private long id;
 	private String theme;
 	private String description;
 	
@@ -9,17 +9,17 @@ public class Question {
 		
 	}
 	
-	public Question(String id, String theme, String description) {
+	public Question(long id, String theme, String description) {
 		this.id = id;
 		this.theme = theme;
 		this.description = description;
 	}
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -44,7 +44,7 @@ public class Question {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((theme == null) ? 0 : theme.hashCode());
 		return result;
 	}
@@ -63,10 +63,7 @@ public class Question {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		if (theme == null) {
 			if (other.theme != null)

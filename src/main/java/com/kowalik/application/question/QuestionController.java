@@ -25,7 +25,7 @@ public class QuestionController {
 	}
 	
 	@DeleteMapping("/questions/{id}")
-	public ResponseEntity<Void> deleteCourse(@PathVariable String id) {
+	public ResponseEntity<Void> deleteCourse(@PathVariable long id) {
 		Question question = questionService.deleteById(id);
 		
 		if (!question.equals(null)) {

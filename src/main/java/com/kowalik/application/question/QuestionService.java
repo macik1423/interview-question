@@ -12,15 +12,15 @@ public class QuestionService {
 	private static long idConuter = 0;
 	
 	static {
-		questions.add(new Question(String.valueOf(++idConuter), "java basic", "is string object"));
-		questions.add(new Question(String.valueOf(++idConuter), "java basic", "co tam"));
+		questions.add(new Question(++idConuter, "java basic", "is string object"));
+		questions.add(new Question(++idConuter, "java basic", "co tam"));
 	}
 	
 	public List<Question> findAll() {
 		return questions;
 	}
 	
-	public Question deleteById(String id) {
+	public Question deleteById(long id) {
 		Question question = findById(id);
 		
 		if (question == null)
@@ -33,9 +33,9 @@ public class QuestionService {
 		return null;
 	}
 	
-	public Question findById(String id) {
+	public Question findById(long id) {
 		for (Question question: questions) {
-			if (question.getId().equals(id)) {
+			if (question.getId() == id) {
 				return question;
 			}
 		}

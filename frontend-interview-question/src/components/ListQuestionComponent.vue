@@ -49,7 +49,7 @@ export default{
                 });
         }, 
         deleteQuestionClicked(id) {
-            QuestionDataService.deleteQuestion()
+            QuestionDataService.deleteQuestion(id)
                 .then(response => {
                     response;
                     this.message = `Delete of question ${id} Successful`;
