@@ -1,17 +1,15 @@
 <template>
   <div class="container">
-    <app-question></app-question>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import QuestionApp from './components/QuestionApp.vue'
+
 
 export default {
   name: 'app',
-  components: {
-    'app-question': QuestionApp
-  }
+  
 }
 </script>
 

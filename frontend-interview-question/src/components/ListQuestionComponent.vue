@@ -11,6 +11,8 @@
                         <th>Id</th>
                         <th>Theme</th>
                         <th>Description</th>
+                        <th>Update</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,11 +21,20 @@
                         <td>{{ question.theme }}</td>
                         <td>{{ question.description }}</td>
                         <td>
+                            <button class="btn btn-success" @click="updateQuestionClicked(question.id)">
+                                Update
+                            </button>
+                        </td>
+                        <td>
                             <button class="btn btn-warning" @click="deleteQuestionClicked(question.id)">
                                 Delete
                             </button>
                         </td>
+                        
                     </tr>
+                    <div>
+                        <button class="btn btn-success" @click="addQuestionClicked()">Add</button>
+                    </div>
                 </tbody>
                
             </table>
@@ -55,6 +66,12 @@ export default{
                     this.message = `Delete of question ${id} Successful`;
                     this.refreshQuestions();
                 })
+        }, 
+        updateQuestionClicked(id) {
+            this.$router.push(`/questions/${id}`);
+        },
+        addQuestionClicked() {
+            this.$router.push(`/question/-1`);
         }
     },
     created() {
