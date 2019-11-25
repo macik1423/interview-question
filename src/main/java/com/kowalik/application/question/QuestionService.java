@@ -45,14 +45,9 @@ public class QuestionService {
 	}
 	
 	public Question save(Question question) {
-		if(question.getId() == -1 || question.getId() == 0) {
-			question.setId(++idCounter);
-			questions.add(question);
-		} else {
-			deleteById(question.getId());
-			questions.add(question);
-		}
+		questions.add(question);
 		return question;
 	}
+		
 }	
 
