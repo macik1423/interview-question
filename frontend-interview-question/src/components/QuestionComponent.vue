@@ -61,6 +61,9 @@ export default{
             } else if(this.description.length < 5) {
                 this.errors.push("Enter atleast 5 characters in description");
             }
+            this.updateAndCreate();
+        }, 
+        updateAndCreate() {
             if(this.errors.length === 0) {
                 if(this.id == 1 || this.id == (this.questions[this.questions.length-1].id+1)) {
                     console.log("create question");
@@ -80,11 +83,7 @@ export default{
                     })
                 }
             }
-            console.log({
-                id: this.id,
-                description: this.description
-            })
-        }, 
+        }
         
     },
     created() {
