@@ -54,12 +54,7 @@ export default{
         refreshQuestions() {
             QuestionDataService.retrieveAllQuestions()
                 .then(response => {
-                    if(response.data.length === 0) {
-                        this.questions.id = 1;
-                    } else {
-                        this.questions = response.data;
-                    }
-                    
+                    this.questions = response.data;
                 });
         }, 
         deleteQuestionClicked(id) {
