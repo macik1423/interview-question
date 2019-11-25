@@ -59,7 +59,6 @@ public class QuestionController {
 		
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
-				.path("/{id}")
 				.buildAndExpand(createdQuestion.getId())
 				.toUri();
 		

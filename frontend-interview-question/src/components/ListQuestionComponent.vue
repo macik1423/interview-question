@@ -59,8 +59,7 @@ export default{
         }, 
         deleteQuestionClicked(id) {
             QuestionDataService.deleteQuestion(id)
-                .then(response => {
-                    response;
+                .then(() => {
                     this.message = `Delete of question ${id} Successful`;
                     this.refreshQuestions();
                 })
@@ -71,7 +70,6 @@ export default{
         addQuestionClicked(id) {
             this.$router.push(`/questions/${id}`);
         }, 
-    
     },
     created() {
         this.refreshQuestions();

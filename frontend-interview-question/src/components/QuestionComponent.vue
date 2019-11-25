@@ -11,6 +11,10 @@
                     <input type="text" class="form-control" v-model="id" disabled>
                 </fieldset>
                 <fieldset class="form-group">
+                    <label>Theme</label>
+                    <input type="text" class="form-control" v-model="theme">
+                </fieldset>
+                <fieldset class="form-group">
                     <label>Descritpion</label>
                     <input type="text" class="form-control" v-model="description">
                 </fieldset>
@@ -26,6 +30,7 @@ export default{
     name: "questionDetails",
     data() {
         return {
+            theme:'',
             description:'',
             errors: []
         };
@@ -40,6 +45,7 @@ export default{
         refreshQuestionDetails() {
             QuestionDataService.retriveQuestion(this.id)
             .then(response => {
+                this.theme = response.data.theme;
                 this.description = response.data.description;
             });
         },
@@ -61,6 +67,7 @@ export default{
                 } else {
                     QuestionDataService.updateQuestion(this.id, {
                         id: this.id,
+                        theme: this.theme,
                         description: this.description
                     })
                     .then(() => {

@@ -1,7 +1,7 @@
 package com.kowalik.application.question;
 
-public class Question {
-	private long id;
+public class Question implements Comparable<Question>{
+	private Long id;
 	private String theme;
 	private String description;
 	
@@ -15,7 +15,7 @@ public class Question {
 		this.description = description;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -72,6 +72,11 @@ public class Question {
 			return false;
 		return true;
 	}
-	
-	
+
+	@Override
+	public int compareTo(Question q) {
+		return this.getId().compareTo(q.getId());
+	}
+
+
 }
