@@ -34,7 +34,8 @@
                 </tbody>
             </table>
             <div>
-                <button class="btn btn-success" @click="addQuestionClicked(questions[questions.length-1].id+1)">Add</button>
+                <button class="btn btn-success" v-if="questions.length" @click="addQuestionClicked(questions[questions.length-1].id+1)">Add</button>
+                <button class="btn btn-success" v-else="" @click="addQuestionClicked(1)">Add</button>
             </div>
         </div>
     </div>

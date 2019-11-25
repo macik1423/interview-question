@@ -54,14 +54,9 @@ public class QuestionController {
 	}
 	
 	@PostMapping("questions/{id}") 
-	public ResponseEntity<Void> createQuestion(@RequestBody Question question) {
+	public Question createQuestion(@RequestBody Question question) {
 		Question createdQuestion = questionService.save(question);
-		
-		URI uri = ServletUriComponentsBuilder
-				.fromCurrentRequest()
-				.buildAndExpand(createdQuestion.getId())
-				.toUri();
-		
-		return ResponseEntity.created(uri).build();
+
+		return createdQuestion;
 	}
 }
