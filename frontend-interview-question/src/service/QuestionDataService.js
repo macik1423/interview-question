@@ -9,6 +9,15 @@ class QuestionDataService {
     deleteQuestion(id) {
         return axios.delete(`${COURSE_API_URL}/questions/${id}`);
     }
+    retriveQuestion(id) {
+        return axios.get(`${COURSE_API_URL}/questions/${id}`);
+    }
+    updateQuestion(id, question) {
+        return axios.put(`${COURSE_API_URL}/questions/${id}`, question);
+    }
+    createQuestion(question) {
+        return axios.post(`${COURSE_API_URL}/questions/`, question);
+    }
 }
 
 export default new QuestionDataService();

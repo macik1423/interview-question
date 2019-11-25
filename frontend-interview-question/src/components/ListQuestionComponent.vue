@@ -30,14 +30,12 @@
                                 Delete
                             </button>
                         </td>
-                        
                     </tr>
-                    <div>
-                        <button class="btn btn-success" @click="addQuestionClicked()">Add</button>
-                    </div>
                 </tbody>
-               
             </table>
+            <div>
+                <button class="btn btn-success" @click="addQuestionClicked(questions[questions.length-1].id+1)">Add</button>
+            </div>
         </div>
     </div>
 </template>
@@ -70,9 +68,10 @@ export default{
         updateQuestionClicked(id) {
             this.$router.push(`/questions/${id}`);
         },
-        addQuestionClicked() {
-            this.$router.push(`/question/-1`);
-        }
+        addQuestionClicked(id) {
+            this.$router.push(`/questions/${id}`);
+        }, 
+    
     },
     created() {
         this.refreshQuestions();

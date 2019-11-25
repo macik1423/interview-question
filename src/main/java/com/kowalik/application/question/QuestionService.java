@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class QuestionService {
 	private static List<Question> questions = new ArrayList<>();
-	private static long idConuter = 0;
+	private static long idCounter = 0;
 	
 	static {
-		questions.add(new Question(++idConuter, "java basic", "is string object"));
-		questions.add(new Question(++idConuter, "java basic", "co tam"));
+		questions.add(new Question(++idCounter, "java basic", "is string object"));
+		questions.add(new Question(++idCounter, "java basic", "co tam"));
 	}
 	
 	public List<Question> findAll() {
@@ -40,6 +40,18 @@ public class QuestionService {
 			}
 		}
 		return null;
+	}
+	
+	public Question save(Question question) {
+		if(question.getId() == -1 || question.getId() == 0) {
+			question.setId(++idCounter);
+			System.out.println("idcounter: " + idCounter);
+			questions.add(question);
+		} else {
+			deleteById(question.getId());
+			questions.add(question);
+		}
+		return question;
 	}
 }	
 
