@@ -56,7 +56,7 @@ public class QuestionController {
 	@PostMapping("questions/") 
 	public Question createQuestion(@RequestBody Question question) {
 		Question createdQuestion = questionService.save(question);
-
+		
 		return createdQuestion;
 	}
 }
