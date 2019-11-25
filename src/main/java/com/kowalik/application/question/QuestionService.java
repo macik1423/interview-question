@@ -2,10 +2,8 @@ package com.kowalik.application.question;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -49,7 +47,6 @@ public class QuestionService {
 	public Question save(Question question) {
 		if(question.getId() == -1 || question.getId() == 0) {
 			question.setId(++idCounter);
-			System.out.println("idcounter: " + idCounter);
 			questions.add(question);
 		} else {
 			deleteById(question.getId());
