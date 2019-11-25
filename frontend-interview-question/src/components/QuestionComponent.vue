@@ -30,6 +30,7 @@ export default{
     name: "questionDetails",
     data() {
         return {
+            questions: [],
             theme:'',
             description:'',
             errors: []
@@ -37,17 +38,20 @@ export default{
     },
     computed: {
         id() {
-            console.log(this.$route.params.id);
             return this.$route.params.id;//patrzy na routes "/questions/:id" na id
         }
     },
     methods: {
         refreshQuestionDetails() {
-            QuestionDataService.retriveQuestion(this.id)
+            QuestionDataService.retrieveQuestion(this.id)
             .then(response => {
                 this.theme = response.data.theme;
                 this.description = response.data.description;
             });
+            QuestionDataService.retrieveAllQuestions()
+                .then(response => {
+                    this.questions = response.data;
+                });
         },
         validateAndSubmit(e) {
             e.preventDefault();
@@ -57,14 +61,16 @@ export default{
             } else if(this.description.length < 5) {
                 this.errors.push("Enter atleast 5 characters in description");
             }
-
             if(this.errors.length === 0) {
-                if(this.id === -1) {
-                    QuestionDataService.createQuestion({description: this.description})
+                var idNewQuestion = this.questions[this.questions.length-1].id+1;
+                if(this.id == idNewQuestion) {
+                    console.log("create question");
+                    QuestionDataService.createQuestion({theme: this.theme, description: this.description})
                     .then(() => {
                         this.$router.push('/questions');
                     });
                 } else {
+                    console.log("update")
                     QuestionDataService.updateQuestion(this.id, {
                         id: this.id,
                         theme: this.theme,

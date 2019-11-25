@@ -34,8 +34,7 @@
                 </tbody>
             </table>
             <div>
-                <button class="btn btn-success" v-if="questions.length" @click="addQuestionClicked(questions[questions.length-1].id+1)">Add</button>
-                <button class="btn btn-success" v-else="" @click="addQuestionClicked(1)">Add</button>
+                <button class="btn btn-success" @click="addQuestionClicked()">Add</button>
             </div>
         </div>
     </div>
@@ -68,8 +67,8 @@ export default{
         updateQuestionClicked(id) {
             this.$router.push(`/questions/${id}`);
         },
-        addQuestionClicked(id) {
-            this.$router.push(`/questions/${id}`);
+        addQuestionClicked() {
+            this.$router.push('/questions/' + (this.questions[this.questions.length-1].id+1));
         }, 
     },
     created() {
