@@ -30,6 +30,7 @@ export default{
     name: "questionDetails",
     data() {
         return {
+            questions:[],
             theme:'',
             description:'',
             errors: []
@@ -47,6 +48,10 @@ export default{
                 this.theme = response.data.theme;
                 this.description = response.data.description;
             });
+            QuestionDataService.retrieveAllQuestions(this.id)
+            .then(response => { 
+                this.questions = response.data;
+            });
         },
         validateAndSubmit(e) {
             e.preventDefault();
@@ -57,10 +62,10 @@ export default{
                 this.errors.push("Enter atleast 5 characters in description");
             }
             if(this.errors.length === 0) {
-                if(this.id == -1) {
+                if(this.id == 1 || this.id == (this.questions[this.questions.length-1].id+1)) {
                     console.log("create question");
-                    
-                    QuestionDataService.createQuestion({theme: this.theme, description: this.description})
+
+                    QuestionDataService.createQuestion({id: this.id, theme: this.theme, description: this.description})
                     .then(() => {
                         this.$router.push('/questions');
                     });

@@ -57,7 +57,7 @@ export default{
                     if(response.data.length !== 0) {
                         this.questions = response.data;
                     } else {
-                        this.questions = [];
+                        this.questions = [];//bez tego do addQuestionClicked przechodzio undefined
                     }
                 });
         }, 
