@@ -54,7 +54,11 @@ export default{
         refreshQuestions() {
             QuestionDataService.retrieveAllQuestions()
                 .then(response => {
-                    this.questions = response.data;
+                    if(response.data.length !== 0) {
+                        this.questions = response.data;
+                    } else {
+                        this.questions = [];
+                    }
                 });
         }, 
         deleteQuestionClicked(id) {
@@ -68,7 +72,11 @@ export default{
             this.$router.push(`/questions/${id}`);
         },
         addQuestionClicked() {
-            this.$router.push('/questions/-1');
+            if(this.questions.length == 0){
+                this.$router.push('/questions/1');
+            } else {
+                this.$router.push('/questions/' + (this.questions[this.questions.length-1].id+1));
+            }
         }, 
     },
     created() {

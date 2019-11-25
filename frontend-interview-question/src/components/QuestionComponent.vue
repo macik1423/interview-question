@@ -59,6 +59,7 @@ export default{
             if(this.errors.length === 0) {
                 if(this.id == -1) {
                     console.log("create question");
+                    
                     QuestionDataService.createQuestion({theme: this.theme, description: this.description})
                     .then(() => {
                         this.$router.push('/questions');
