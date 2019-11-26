@@ -41,9 +41,9 @@
 </template>
 
 <script>
-import QuestionDataService from '../service/QuestionDataService';
+import QuestionDataService from '../../service/QuestionDataService'; //musi wyjsc z question ../ i z components ../
 export default{
-    name: "QuestionList",
+    name: "Questions",
     data() {
         return {
             questions: [],

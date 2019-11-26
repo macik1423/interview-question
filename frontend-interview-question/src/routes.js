@@ -6,6 +6,7 @@ Vue.use(Router);
 const router = new Router({
     mode: 'history', //use browser history
     routes: [
+        //Question routes
         {
             path: "/",
             name: "Home",
@@ -14,18 +15,20 @@ const router = new Router({
         {
             path: "/questions",
             name: "Questions",
-            component: () => import("./components/ListQuestionComponent")
+            component: () => import("./components/question/ListQuestionComponent")
         },
         {
             path: "/questions/:id",
             name: "Update Question",
-            component: () => import("./components/UpdateQuestionComponent")
+            component: () => import("./components/question/UpdateQuestionComponent")
         },
         {
             path: "/newQuestion",
             name: "Add Question",
-            component: () => import("./components/AddQuestionComponent")
+            component: () => import("./components/question/AddQuestionComponent")
         }
+
+        //Theme routes
     ]
 });
 

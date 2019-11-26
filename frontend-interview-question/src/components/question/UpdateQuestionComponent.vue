@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>Add new question</h3>
+        <h3>Update Question</h3>
         <div class="container">
             <form @submit="validateAndSubmit">
                 <div v-if="errors.length">
@@ -25,19 +25,30 @@
 </template>
 
 <script>
-import QuestionDataService from '../service/QuestionDataService';
+import QuestionDataService from '../../service/QuestionDataService'; //musi wyjsc z question ../ i z components ../
 export default{
-    name: "addComponent",
+    name: "update",
     data() {
         return {
             questions:[],
             theme:'',
             description:'',
-            errors: [],
-            id: ''
+            errors: []
         };
     },
+    computed: {
+        id() {
+            return this.$route.params.id;//patrzy na routes "/questions/:id" na id
+        }
+    },
     methods: {
+        refreshQuestionDetails() {
+            QuestionDataService.retrieveQuestion(this.id)
+            .then(response => {
+                this.theme = response.data.theme;
+                this.description = response.data.description;
+            });
+        },
         validateAndSubmit(e) {
             e.preventDefault();
             this.errors=[];
@@ -46,17 +57,22 @@ export default{
             } else if(this.description.length < 2) {
                 this.errors.push("Enter atleast 2 characters in description");
             }
-            this.create();
+            this.update();
         }, 
-        create() {
-            console.log("create");
-            if(this.errors.length === 0) {
-                QuestionDataService.createQuestion({theme: this.theme, description: this.description})
-                .then(() => {
-                    this.$router.push('/questions');
-                });
-            }
+        update() {
+            console.log("update");
+            QuestionDataService.updateQuestion(this.id, {
+                id: this.id,
+                theme: this.theme,
+                description: this.description
+            })
+            .then(() => {
+                this.$router.push('/questions');
+            })
         }
     },
+    created() {
+        this.refreshQuestionDetails();
+    }
 };
 </script>
