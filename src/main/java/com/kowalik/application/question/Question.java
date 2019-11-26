@@ -1,8 +1,23 @@
 package com.kowalik.application.question;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Question")
 public class Question implements Comparable<Question>{
+	
+	@Id
+	@GeneratedValue
 	private long id;
+	
+	@Column(name = "theme")
 	private String theme;
+	
+	@Column(name = "description")
 	private String description;
 	
 	public Question() {
