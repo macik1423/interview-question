@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>Question</h3>
+        <h3>Update Question</h3>
         <div class="container">
             <form @submit="validateAndSubmit">
                 <div v-if="errors.length">

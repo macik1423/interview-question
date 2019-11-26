@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>Question</h3>
+        <h3>Add new question</h3>
         <div class="container">
             <form @submit="validateAndSubmit">
                 <div v-if="errors.length">
@@ -34,7 +34,7 @@ export default{
             theme:'',
             description:'',
             errors: [],
-            id: "add new Question"
+            id: ''
         };
     },
     methods: {
