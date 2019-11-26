@@ -2,6 +2,7 @@ package com.kowalik.application.question;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,18 +32,17 @@ public class QuestionController {
 	}
 	
 	@DeleteMapping("/questions/{id}")
-	public ResponseEntity<Void> deleteCourse(@PathVariable long id) {
-		Question question = questionService.deleteById(id);
-		
-		if (!question.equals(null)) {
-			return ResponseEntity.noContent().build();
+	public ResponseEntity<Long> deleteQuestion(@PathVariable long id) {
+		try {
+			questionService.deleteById(id);
+			return new ResponseEntity<>(id, HttpStatus.OK);
+		} catch(Exception EmptyResultDataAccessException) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
 		}
-		
-		return ResponseEntity.notFound().build();
 	}
 	
 	@GetMapping("/questions/{id}")
-	public Question getQuestion(@PathVariable long id) {
+	public Optional<Question> getQuestion(@PathVariable long id) {
 		return questionService.findById(id);
 	}
 	

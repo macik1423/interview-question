@@ -93,4 +93,9 @@ public class Question implements Comparable<Question>{
 		return Long.compare(id, q.getId());
 	}
 
+	@Override
+	public String toString() {
+		return "Question [id=" + id + ", theme=" + theme + ", description=" + description + "]";
+	}
+
 }
