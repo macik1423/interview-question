@@ -57,35 +57,22 @@ export default{
             } else if(this.description.length < 2) {
                 this.errors.push("Enter atleast 2 characters in description");
             }
-            this.updateOrCreate();
+            this.update();
         }, 
-        updateOrCreate() {
-            if(this.errors.length === 0) {
-                if(this.id === "newQuestion") {
-                    console.log("create question");
-                    QuestionDataService.createQuestion({theme: this.theme, description: this.description})
-                    .then(() => {
-                        this.$router.push('/questions');
-                    });
-                } else {
-                    console.log("update");
-                    
-                    QuestionDataService.updateQuestion(this.id, {
-                        id: this.id,
-                        theme: this.theme,
-                        description: this.description
-                    })
-                    .then(() => {
-                        this.$router.push('/questions');
-                    })
-                }
-            }
+        update() {
+            console.log("update");
+            QuestionDataService.updateQuestion(this.id, {
+                id: this.id,
+                theme: this.theme,
+                description: this.description
+            })
+            .then(() => {
+                this.$router.push('/questions');
+            })
         }
-        
     },
-    // created() {
-    //     console.log("created");
-    //     this.refreshQuestionDetails();
-    // }
+    created() {
+        this.refreshQuestionDetails();
+    }
 };
 </script>

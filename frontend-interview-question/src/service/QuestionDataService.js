@@ -16,7 +16,7 @@ class QuestionDataService {
         return axios.put(`${COURSE_API_URL}/questions/${id}`, question);
     }
     createQuestion(question) {
-        return axios.post(`${COURSE_API_URL}/questions/`, question);
+        return axios.post(`${COURSE_API_URL}/newQuestion`, question);
     }
 }
 

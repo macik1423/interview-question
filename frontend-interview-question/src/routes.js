@@ -18,8 +18,13 @@ const router = new Router({
         },
         {
             path: "/questions/:id",
-            name: "Question Details",
-            component: () => import("./components/QuestionComponent")
+            name: "Update Question",
+            component: () => import("./components/UpdateQuestionComponent")
+        },
+        {
+            path: "/newQuestion",
+            name: "Add Question",
+            component: () => import("./components/AddQuestionComponent")
         }
     ]
 });

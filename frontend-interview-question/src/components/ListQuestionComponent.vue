@@ -68,7 +68,7 @@ export default{
             this.$router.push(`/questions/${id}`);
         },
         addQuestionClicked() {
-            this.$router.push('/questions/newQuestion');
+            this.$router.push('/newQuestion');
         }, 
     },
     created() {

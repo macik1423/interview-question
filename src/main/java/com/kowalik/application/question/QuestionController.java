@@ -53,7 +53,12 @@ public class QuestionController {
 		return new ResponseEntity<Question>(questionUpdate, HttpStatus.OK);
 	}
 	
-	@PostMapping("/questions/") 
+	@GetMapping("/newQuestion")
+	public ResponseEntity<Void> newQuestionForm() {
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@PostMapping("/newQuestion") 
 	public Question createQuestion(@RequestBody Question question) {
 		Question createdQuestion = questionService.save(question);
 		
