@@ -1,6 +1,5 @@
 package com.kowalik.application.question;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 //3000 react; 4200 angular; 8081 vue
 @CrossOrigin(origins = "http://localhost:8081" )
 @RestController
