@@ -54,11 +54,7 @@ export default{
         refreshQuestions() {
             QuestionDataService.retrieveAllQuestions()
                 .then(response => {
-                    if(response.data.length !== 0) {
-                        this.questions = response.data;
-                    } else {
-                        this.questions = [];//bez tego do addQuestionClicked przechodzio undefined
-                    }
+                    this.questions = response.data;
                 });
         }, 
         deleteQuestionClicked(id) {
@@ -72,11 +68,7 @@ export default{
             this.$router.push(`/questions/${id}`);
         },
         addQuestionClicked() {
-            if(this.questions.length == 0){
-                this.$router.push('/questions/1');
-            } else {
-                this.$router.push('/questions/' + (this.questions[this.questions.length-1].id+1));
-            }
+            this.$router.push('/questions/newQuestion');
         }, 
     },
     created() {

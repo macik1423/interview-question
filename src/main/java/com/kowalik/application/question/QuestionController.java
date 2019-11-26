@@ -53,7 +53,7 @@ public class QuestionController {
 		return new ResponseEntity<Question>(questionUpdate, HttpStatus.OK);
 	}
 	
-	@PostMapping("questions/") 
+	@PostMapping("/questions/") 
 	public Question createQuestion(@RequestBody Question question) {
 		Question createdQuestion = questionService.save(question);
 		

@@ -48,31 +48,28 @@ export default{
                 this.theme = response.data.theme;
                 this.description = response.data.description;
             });
-            QuestionDataService.retrieveAllQuestions(this.id)
-            .then(response => { 
-                this.questions = response.data;
-            });
         },
         validateAndSubmit(e) {
             e.preventDefault();
             this.errors=[];
             if(!this.description) {
                 this.errors.push("Enter valid values");
-            } else if(this.description.length < 5) {
-                this.errors.push("Enter atleast 5 characters in description");
+            } else if(this.description.length < 2) {
+                this.errors.push("Enter atleast 2 characters in description");
             }
-            this.updateAndCreate();
+            this.updateOrCreate();
         }, 
-        updateAndCreate() {
+        updateOrCreate() {
             if(this.errors.length === 0) {
-                if(this.id == 1 || this.id == (this.questions[this.questions.length-1].id+1)) {
+                if(this.id === "newQuestion") {
                     console.log("create question");
-                    QuestionDataService.createQuestion({id: this.id, theme: this.theme, description: this.description})
+                    QuestionDataService.createQuestion({theme: this.theme, description: this.description})
                     .then(() => {
                         this.$router.push('/questions');
                     });
                 } else {
-                    console.log("update")
+                    console.log("update");
+                    
                     QuestionDataService.updateQuestion(this.id, {
                         id: this.id,
                         theme: this.theme,
@@ -86,8 +83,9 @@ export default{
         }
         
     },
-    created() {
-        this.refreshQuestionDetails();
-    }
+    // created() {
+    //     console.log("created");
+    //     this.refreshQuestionDetails();
+    // }
 };
 </script>
