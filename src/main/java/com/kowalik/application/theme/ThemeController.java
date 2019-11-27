@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ThemeController {
 	
-	private ThemeRepository themeRepository;
+	private ThemeService themeService;
 	
-	ThemeController(ThemeRepository themeRepository){
-		this.themeRepository = themeRepository;
+	ThemeController(ThemeService themeService){
+		this.themeService = themeService;
 	}
 	
 	@GetMapping("/theme")
 	public List<Theme> getAllThemes() {
-		return themeRepository.findAll();
+		return themeService.findAll();
 	}
 	
 	@GetMapping("/theme/{id}")
 	public Optional<Theme> getThemeById(@PathVariable long id) {
-		return themeRepository.findById(id);
+		return themeService.findById(id);
 	}
 }
