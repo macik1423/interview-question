@@ -8,4 +8,5 @@ public enum ThemeType {
 	private ThemeType(String type) {
 		this.type = type;
 	}
+
 }	

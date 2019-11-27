@@ -3,6 +3,8 @@ package com.kowalik.application.theme;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -16,19 +18,19 @@ public class Theme {
 	@GeneratedValue
 	private long id;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "type")
-	private String type;
-	
+	private ThemeType themeType;
 	
 	public Theme() {
 		
 	}
-
-	public Theme(long id, String type) {
-		this.id = id;
-		this.type = type;
-	}
 	
+	public Theme(long id, ThemeType themeType) {
+		this.id = id;
+		this.themeType = themeType;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -36,12 +38,12 @@ public class Theme {
 		this.id = id;
 	}
 
-	public String getType() {
-		return type;
+	public ThemeType getThemeType() {
+		return themeType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setThemeType(ThemeType themeType) {
+		this.themeType = themeType;
 	}
 
 }
