@@ -1,10 +1,12 @@
 package com.kowalik.application.theme;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "Theme")
@@ -14,16 +16,17 @@ public class Theme {
 	@GeneratedValue
 	private long id;
 	
-	@Column(name = "description")
-	private String description;
+	@Column(name = "type")
+	private String type;
+	
 	
 	public Theme() {
 		
 	}
 
-	public Theme(long id, String description) {
+	public Theme(long id, String type) {
 		this.id = id;
-		this.description = description;
+		this.type = type;
 	}
 	
 	public long getId() {
@@ -32,10 +35,13 @@ public class Theme {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getDescription() {
-		return description;
+
+	public String getType() {
+		return type;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+
+	public void setType(String type) {
+		this.type = type;
 	}
+
 }

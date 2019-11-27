@@ -18,7 +18,7 @@
                 <tbody>
                     <tr v-for="question in questions" :key="question.id">
                         <td>{{ question.id }}</td>
-                        <td>{{ question.theme }}</td>
+                        <td>{{ question.theme.type }}</td>
                         <td>{{ question.description }}</td>
                         <td>
                             <button class="btn btn-success" @click="updateQuestionClicked(question.id)">

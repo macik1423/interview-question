@@ -30,6 +30,9 @@ public class QuestionService {
 		return questionRepository.save(question);
 	}
 
+	public List<Question> findByThemeId(Long themeId) {
+		return questionRepository.findByThemeId(themeId);
+	}
 		
 }	
 

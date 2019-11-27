@@ -4,7 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.kowalik.application.theme.Theme;
 
 @Entity
 @Table(name = "Question")
@@ -14,8 +18,9 @@ public class Question implements Comparable<Question>{
 	@GeneratedValue
 	private long id;
 	
-	@Column(name = "theme")
-	private String theme;
+	@ManyToOne
+	@JoinColumn(name = "theme_id")
+	private Theme theme;
 	
 	@Column(name = "description")
 	private String description;
@@ -24,7 +29,7 @@ public class Question implements Comparable<Question>{
 		
 	}
 	
-	public Question(long id, String theme, String description) {
+	public Question(long id, Theme theme, String description) {
 		this.id = id;
 		this.theme = theme;
 		this.description = description;
@@ -38,11 +43,11 @@ public class Question implements Comparable<Question>{
 		this.id = id;
 	}
 
-	public String getTheme() {
+	public Theme getTheme() {
 		return theme;
 	}
 
-	public void setTheme(String theme) {
+	public void setTheme(Theme theme) {
 		this.theme = theme;
 	}
 

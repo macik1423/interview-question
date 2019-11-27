@@ -26,6 +26,10 @@ const router = new Router({
             path: "/newQuestion",
             name: "Add Question",
             component: () => import("./components/question/AddQuestionComponent")
+        },
+        {
+            path: "/question",
+            component: () => import("./components/question/AddQuestionComponent")
         }
 
         //Theme routes
