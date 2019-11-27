@@ -52,23 +52,23 @@ export default{
     },
     methods: {
         refreshQuestions() {
-            QuestionDataService.retrieveAllQuestions()
+            QuestionDataService.retrieveAllQuestionsAdmin()
                 .then(response => {
                     this.questions = response.data;
                 });
         }, 
         deleteQuestionClicked(id) {
-            QuestionDataService.deleteQuestion(id)
+            QuestionDataService.deleteQuestionAdmin(id)
                 .then(() => {
                     this.message = `Delete of question ${id} Successful`;
                     this.refreshQuestions();
                 })
         }, 
         updateQuestionClicked(id) {
-            this.$router.push(`/questions/${id}`);
+            this.$router.push(`/admin/questions/${id}`);
         },
         addQuestionClicked() {
-            this.$router.push('/newQuestion');
+            this.$router.push('/admin/newQuestion');
         }, 
     },
     created() {

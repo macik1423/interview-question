@@ -13,23 +13,23 @@ const router = new Router({
             component: () => import("./components/Wellcome")
         },
         {
-            path: "/questions",
-            name: "Questions",
-            component: () => import("./components/question/ListQuestionComponent")
+            path: "/admin/questions",
+            name: "Admin panel questions",
+            component: () => import("./components/question/AdminListQuestionComponent")
         },
         {
-            path: "/questions/:id",
-            name: "Update Question",
+            path: "/admin/questions/:id",
+            name: "Admin panel update Question",
             component: () => import("./components/question/UpdateQuestionComponent")
         },
         {
-            path: "/newQuestion",
-            name: "Add Question",
+            path: "/admin/newQuestion",
+            name: "Admin panel add Question",
             component: () => import("./components/question/AddQuestionComponent")
         },
         {
-            path: "/question",
-            component: () => import("./components/question/AddQuestionComponent")
+            path: "/questions/:id",
+            component: () => import("./components/question/QuestionComponent")
         }
 
         //Theme routes
