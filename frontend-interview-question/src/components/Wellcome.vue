@@ -16,6 +16,7 @@
         </ul>
     </div>
 </template>
+
 <script>
 import QuestionDataService from '../service/QuestionDataService';
 export default {
@@ -40,6 +41,7 @@ export default {
     }
 }
 </script>
+
 <style scoped>
 ul {
     list-style: none;
