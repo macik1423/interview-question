@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>Question</h3>
+        <h3>Update Question</h3>
         <div class="container">
             <form @submit="validateAndSubmit">
                 <div v-if="errors.length">
@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import QuestionDataService from '../service/QuestionDataService';
+import QuestionDataService from '../../service/QuestionDataService'; //musi wyjsc z question ../ i z components ../
 export default{
-    name: "questionDetails",
+    name: "update",
     data() {
         return {
             questions:[],
@@ -48,43 +48,28 @@ export default{
                 this.theme = response.data.theme;
                 this.description = response.data.description;
             });
-            QuestionDataService.retrieveAllQuestions(this.id)
-            .then(response => { 
-                this.questions = response.data;
-            });
         },
         validateAndSubmit(e) {
             e.preventDefault();
             this.errors=[];
             if(!this.description) {
                 this.errors.push("Enter valid values");
-            } else if(this.description.length < 5) {
-                this.errors.push("Enter atleast 5 characters in description");
+            } else if(this.description.length < 2) {
+                this.errors.push("Enter atleast 2 characters in description");
             }
-            this.updateAndCreate();
+            this.update();
         }, 
-        updateAndCreate() {
-            if(this.errors.length === 0) {
-                if(this.id == 1 || this.id == (this.questions[this.questions.length-1].id+1)) {
-                    console.log("create question");
-                    QuestionDataService.createQuestion({id: this.id, theme: this.theme, description: this.description})
-                    .then(() => {
-                        this.$router.push('/questions');
-                    });
-                } else {
-                    console.log("update")
-                    QuestionDataService.updateQuestion(this.id, {
-                        id: this.id,
-                        theme: this.theme,
-                        description: this.description
-                    })
-                    .then(() => {
-                        this.$router.push('/questions');
-                    })
-                }
-            }
+        update() {
+            console.log("update");
+            QuestionDataService.updateQuestion(this.id, {
+                id: this.id,
+                theme: this.theme,
+                description: this.description
+            })
+            .then(() => {
+                this.$router.push('/questions');
+            })
         }
-        
     },
     created() {
         this.refreshQuestionDetails();

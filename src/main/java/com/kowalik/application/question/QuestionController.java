@@ -1,7 +1,7 @@
 package com.kowalik.application.question;
 
-import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.kowalik.application.theme.Theme;
 //3000 react; 4200 angular; 8081 vue
 @CrossOrigin(origins = "http://localhost:8081" )
 @RestController
@@ -30,19 +31,23 @@ public class QuestionController {
 		return questionService.findAll();
 	}
 	
+	@GetMapping("/theme/{themeId}/questions") 
+	public List<Question> getAllQuestionsByTheme(@PathVariable(value="themeId") Long themeId) {
+		return questionService.findByThemeId(themeId);
+	}
+	
 	@DeleteMapping("/questions/{id}")
-	public ResponseEntity<Void> deleteCourse(@PathVariable long id) {
-		Question question = questionService.deleteById(id);
-		
-		if (!question.equals(null)) {
-			return ResponseEntity.noContent().build();
+	public ResponseEntity<Long> deleteQuestion(@PathVariable long id) {
+		try {
+			questionService.deleteById(id);
+			return new ResponseEntity<>(id, HttpStatus.OK);
+		} catch(Exception EmptyResultDataAccessException) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
 		}
-		
-		return ResponseEntity.notFound().build();
 	}
 	
 	@GetMapping("/questions/{id}")
-	public Question getQuestion(@PathVariable long id) {
+	public Optional<Question> getQuestion(@PathVariable long id) {
 		return questionService.findById(id);
 	}
 	
@@ -52,8 +57,8 @@ public class QuestionController {
 		
 		return new ResponseEntity<Question>(questionUpdate, HttpStatus.OK);
 	}
-	
-	@PostMapping("questions/") 
+
+	@PostMapping("/newQuestion") 
 	public Question createQuestion(@RequestBody Question question) {
 		Question createdQuestion = questionService.save(question);
 		

@@ -1,52 +1,37 @@
 package com.kowalik.application.question;
 
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class QuestionService {
-	private static List<Question> questions = new ArrayList<>();
-	private static long idCounter = 0;
 	
-	static {
-		questions.add(new Question(++idCounter, "java basic", "is string object"));
-		questions.add(new Question(++idCounter, "java basic", "co tam"));
+	private QuestionRepository questionRepository;
+	
+	QuestionService(QuestionRepository questionRepository) {
+		this.questionRepository = questionRepository;
 	}
 	
 	public List<Question> findAll() {
-		Collections.sort(questions);
-		return questions;
+		return questionRepository.findAll();
 	}
 	
-	public Question deleteById(long id) {
-		Question question = findById(id);
-		
-		if (question == null)
-			return null;
-		
-		if (questions.remove(question)) {
-			return question;
-		}
-		
-		return null;
+	public void deleteById(long id) {
+		questionRepository.deleteById(id);
 	}
 	
-	public Question findById(long id) {
-		for (Question question: questions) {
-			if (question.getId() == id) {
-				return question;
-			}
-		}
-		return null;
+	public Optional<Question> findById(long id) {
+		return questionRepository.findById(id);
 	}
 	
 	public Question save(Question question) {
-		questions.add(question);
-		return question;
+		return questionRepository.save(question);
+	}
+
+	public List<Question> findByThemeId(Long themeId) {
+		return questionRepository.findByThemeId(themeId);
 	}
 		
 }	

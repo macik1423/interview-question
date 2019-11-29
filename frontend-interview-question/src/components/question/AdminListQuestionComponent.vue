@@ -18,7 +18,7 @@
                 <tbody>
                     <tr v-for="question in questions" :key="question.id">
                         <td>{{ question.id }}</td>
-                        <td>{{ question.theme }}</td>
+                        <td>{{ question.theme.type }}</td>
                         <td>{{ question.description }}</td>
                         <td>
                             <button class="btn btn-success" @click="updateQuestionClicked(question.id)">
@@ -41,9 +41,9 @@
 </template>
 
 <script>
-import QuestionDataService from '../service/QuestionDataService';
+import QuestionDataService from '../../service/QuestionDataService'; //musi wyjsc z question ../ i z components ../
 export default{
-    name: "QuestionList",
+    name: "Questions",
     data() {
         return {
             questions: [],
@@ -52,31 +52,23 @@ export default{
     },
     methods: {
         refreshQuestions() {
-            QuestionDataService.retrieveAllQuestions()
+            QuestionDataService.retrieveAllQuestionsAdmin()
                 .then(response => {
-                    if(response.data.length !== 0) {
-                        this.questions = response.data;
-                    } else {
-                        this.questions = [];//bez tego do addQuestionClicked przechodzio undefined
-                    }
+                    this.questions = response.data;
                 });
         }, 
         deleteQuestionClicked(id) {
-            QuestionDataService.deleteQuestion(id)
+            QuestionDataService.deleteQuestionAdmin(id)
                 .then(() => {
                     this.message = `Delete of question ${id} Successful`;
                     this.refreshQuestions();
                 })
         }, 
         updateQuestionClicked(id) {
-            this.$router.push(`/questions/${id}`);
+            this.$router.push(`/admin/questions/${id}`);
         },
         addQuestionClicked() {
-            if(this.questions.length == 0){
-                this.$router.push('/questions/1');
-            } else {
-                this.$router.push('/questions/' + (this.questions[this.questions.length-1].id+1));
-            }
+            this.$router.push('/admin/newQuestion');
         }, 
     },
     created() {

@@ -6,21 +6,33 @@ Vue.use(Router);
 const router = new Router({
     mode: 'history', //use browser history
     routes: [
+        //Question routes
         {
             path: "/",
             name: "Home",
-            component: () => import("./components/ListQuestionComponent")
+            component: () => import("./components/Wellcome")
         },
         {
-            path: "/questions",
-            name: "Questions",
-            component: () => import("./components/ListQuestionComponent")
+            path: "/admin/questions",
+            name: "Admin panel questions",
+            component: () => import("./components/question/AdminListQuestionComponent")
+        },
+        {
+            path: "/admin/questions/:id",
+            name: "Admin panel update Question",
+            component: () => import("./components/question/UpdateQuestionComponent")
+        },
+        {
+            path: "/admin/newQuestion",
+            name: "Admin panel add Question",
+            component: () => import("./components/question/AddQuestionComponent")
         },
         {
             path: "/questions/:id",
-            name: "Question Details",
-            component: () => import("./components/QuestionComponent")
+            component: () => import("./components/question/QuestionComponent")
         }
+
+        //Theme routes
     ]
 });
 

@@ -1,15 +1,36 @@
 package com.kowalik.application.question;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.kowalik.application.theme.Theme;
+
+@Entity
+@Table(name = "Question")
 public class Question implements Comparable<Question>{
+	
+	@Id
+	@GeneratedValue
 	private long id;
-	private String theme;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "theme_id")
+	private Theme theme;
+	
+	@Column(name = "description")
 	private String description;
 	
 	public Question() {
 		
 	}
 	
-	public Question(long id, String theme, String description) {
+	public Question(long id, Theme theme, String description) {
 		this.id = id;
 		this.theme = theme;
 		this.description = description;
@@ -23,11 +44,11 @@ public class Question implements Comparable<Question>{
 		this.id = id;
 	}
 
-	public String getTheme() {
+	public Theme getTheme() {
 		return theme;
 	}
 
-	public void setTheme(String theme) {
+	public void setTheme(Theme theme) {
 		this.theme = theme;
 	}
 
@@ -76,6 +97,11 @@ public class Question implements Comparable<Question>{
 	@Override
 	public int compareTo(Question q) {
 		return Long.compare(id, q.getId());
+	}
+
+	@Override
+	public String toString() {
+		return "Question [id=" + id + ", theme=" + theme + ", description=" + description + "]";
 	}
 
 }
