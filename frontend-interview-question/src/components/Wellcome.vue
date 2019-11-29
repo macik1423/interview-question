@@ -9,7 +9,7 @@
                         <h2 v-if="question.theme.type == 'java'"><font-awesome-icon :icon="['fab', 'java']"/></h2>
                         <h2 v-if="question.theme.type == 'spring'"><font-awesome-icon :icon="['fas', 'seedling']"/></h2>
                         <p class="card-text">{{ question.description }}</p>
-                        <button @click="goToQuestion(question.id)" class="btn btn-primary">Do pytania</button>
+                        <button @click="goToQuestion(question.id)" class="btn btn-primary">Sprawdz odpowiedz</button>
                     </div>
                 </div>
             </li>

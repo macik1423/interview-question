@@ -19,21 +19,25 @@ public class Question implements Comparable<Question>{
 	@GeneratedValue
 	private long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "theme_id")
 	private Theme theme;
 	
 	@Column(name = "description")
 	private String description;
 	
+	@Column(name = "answer")
+	private String answer;
+	
 	public Question() {
 		
 	}
-	
-	public Question(long id, Theme theme, String description) {
+
+	public Question(long id, Theme theme, String description, String answer) {
 		this.id = id;
 		this.theme = theme;
 		this.description = description;
+		this.answer = answer;
 	}
 
 	public long getId() {
@@ -60,10 +64,19 @@ public class Question implements Comparable<Question>{
 		this.description = description;
 	}
 
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((answer == null) ? 0 : answer.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((theme == null) ? 0 : theme.hashCode());
@@ -79,6 +92,11 @@ public class Question implements Comparable<Question>{
 		if (getClass() != obj.getClass())
 			return false;
 		Question other = (Question) obj;
+		if (answer == null) {
+			if (other.answer != null)
+				return false;
+		} else if (!answer.equals(other.answer))
+			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;

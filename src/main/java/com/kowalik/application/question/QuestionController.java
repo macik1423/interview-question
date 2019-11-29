@@ -36,7 +36,7 @@ public class QuestionController {
 		return questionService.findByThemeId(themeId);
 	}
 	
-	@DeleteMapping("/questions/{id}")
+	@DeleteMapping("/admin/questions/{id}")
 	public ResponseEntity<Long> deleteQuestion(@PathVariable long id) {
 		try {
 			questionService.deleteById(id);
@@ -51,14 +51,14 @@ public class QuestionController {
 		return questionService.findById(id);
 	}
 	
-	@PutMapping("/questions/{id}")
+	@PutMapping("/admin/questions/{id}")
 	public ResponseEntity<Question> updateQuestion(@PathVariable long id, @RequestBody Question question) {
 		Question questionUpdate = questionService.save(question);
 		
 		return new ResponseEntity<Question>(questionUpdate, HttpStatus.OK);
 	}
 
-	@PostMapping("/newQuestion") 
+	@PostMapping("/admin/newQuestion") 
 	public Question createQuestion(@RequestBody Question question) {
 		Question createdQuestion = questionService.save(question);
 		

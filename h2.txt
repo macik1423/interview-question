@@ -1,9 +1,9 @@
 insert into theme values(1,'JAVA');
 insert into theme values(2,'SPRING');
-insert into question values(1,'cos cos',1);
-insert into question values(2,'cos cos java',1);
-insert into question values(3,'cos cos spring',2);
-insert into question values(4,'cos cos spring2',2);
+insert into question values(1,'odpowiedz1','pytanie1',1);
+insert into question values(2,'odpowiedz2','pytanie2',1);
+insert into question values(3,'odpowiedz3','pytanie3',2);
+insert into question values(4,'odpowiedz4','pytanie4',2);
 
 select * from question left join theme on question.theme_id = theme.id 
 select * from theme
