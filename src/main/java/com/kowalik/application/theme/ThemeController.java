@@ -25,4 +25,5 @@ public class ThemeController {
 	public Optional<Theme> getThemeById(@PathVariable long id) {
 		return themeService.findById(id);
 	}
+	
 }

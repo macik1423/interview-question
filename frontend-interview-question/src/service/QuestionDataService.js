@@ -11,20 +11,17 @@ class QuestionDataService {
     }
 
     //admin panel
-    retrieveAllQuestionsAdmin() {
-        return axios.get(`${COURSE_API_URL}/admin/questions`);
-    }
     deleteQuestionAdmin(id) {
         return axios.delete(`${COURSE_API_URL}/admin/questions/${id}`);
-    }
-    retrieveQuestionAdmin(id) {
-        return axios.get(`${COURSE_API_URL}/admin/questions/${id}`);
     }
     updateQuestionAdmin(id, question) {
         return axios.put(`${COURSE_API_URL}/admin/questions/${id}`, question);
     }
     createQuestionAdmin(question) {
         return axios.post(`${COURSE_API_URL}/admin/newQuestion`, question);
+    }
+    retrieveAllThemeType() {
+        return axios.get(`${COURSE_API_URL}/themeType`);
     }
 }
 

@@ -33,7 +33,8 @@ export default{
             questions:[],
             theme:'',
             description:'',
-            errors: []
+            errors: [], 
+            themeType: [],
         };
     },
     computed: {
@@ -45,7 +46,7 @@ export default{
         refreshQuestionDetails() {
             QuestionDataService.retrieveQuestion(this.id)
             .then(response => {
-                this.theme = response.data.theme;
+                this.theme = response.data.theme.themeType;
                 this.description = response.data.description;
             });
         },

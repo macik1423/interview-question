@@ -18,8 +18,9 @@
                 <tbody>
                     <tr v-for="question in questions" :key="question.id">
                         <td>{{ question.id }}</td>
-                        <td>{{ question.theme.type }}</td>
+                        <td>{{ question.theme.themeType }}</td>
                         <td>{{ question.description }}</td>
+                        <td>{{ question.answer }}</td>
                         <td>
                             <button class="btn btn-success" @click="updateQuestionClicked(question.id)">
                                 Update
@@ -52,7 +53,7 @@ export default{
     },
     methods: {
         refreshQuestions() {
-            QuestionDataService.retrieveAllQuestionsAdmin()
+            QuestionDataService.retrieveAllQuestions()
                 .then(response => {
                     this.questions = response.data;
                 });
