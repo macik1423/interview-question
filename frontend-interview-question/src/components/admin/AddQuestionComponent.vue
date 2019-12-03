@@ -26,6 +26,7 @@
 
 <script>
 import QuestionDataService from '../../service/QuestionDataService'; //musi wyjsc z question ../ i z components ../
+import ThemeDataService from '../../service/ThemeDataService';
 export default{
     name: "newQuestion",
     data() {
@@ -34,7 +35,8 @@ export default{
             theme:'',
             description:'',
             errors: [],
-            id: ''
+            id: '',
+            themeType: [],
         };
     },
     methods: {
@@ -55,14 +57,20 @@ export default{
                 .then(() => {
                     this.$router.push('/questions');
                 });
+                
             }
-        }
+        },
     },
+    created() {
+        console.log("created");
+        ThemeDataService.retrieveAllThemeType() 
+            .then(response => {
+                console.log(response.data);
+            })
+    }
 };
 </script>
 
 <style scoped>
-h3 {
-    background-color: red;
-}
+
 </style>

@@ -20,9 +20,7 @@ class QuestionDataService {
     createQuestionAdmin(question) {
         return axios.post(`${COURSE_API_URL}/admin/newQuestion`, question);
     }
-    retrieveAllThemeType() {
-        return axios.get(`${COURSE_API_URL}/themeType`);
-    }
+    
 }
 
 export default new QuestionDataService();
