@@ -32,6 +32,12 @@ const router = new Router({
             path: "/admin",
             name: "Admin panel",
             component: () => import("./components/admin/ListQuestionComponent")
+        },
+
+        //login
+        {
+            path:"/login",
+            component: () => import("./components/Login")
         }
     ]
 });

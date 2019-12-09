@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import com.kowalik.application.theme.Theme;
 
 @Entity
-@Table(name = "Question")
+@Table(name = "questions")
 public class Question implements Comparable<Question>, Serializable{
 	
 	/**
