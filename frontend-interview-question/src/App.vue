@@ -1,18 +1,12 @@
 <template>
-  <div class="container">
+  <v-app>
     <router-view/>
-  </div>
+  </v-app>
 </template>
 
 <script>
 
-
 export default {
-  name: 'app',
-  
-}
+ 
+};
 </script>
-
-<style>
-@import url(https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css)
-</style>
