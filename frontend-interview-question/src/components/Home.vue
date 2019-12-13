@@ -39,6 +39,11 @@
                 <v-btn text @click="checkAnswer(question.id)">Sprawdź odpowiedź</v-btn>
               </v-card-actions>
             </div>
+
+            <div>
+              <span>Umiem</span>
+              <span>Nie umiem</span>
+            </div>
           </div>
         </v-card>
       </v-col>
