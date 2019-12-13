@@ -12,7 +12,7 @@
       <v-list>
         <v-list-item v-for="item in items" :key="item.title" link>
           <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon :color="item.color">{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -23,7 +23,7 @@
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block>Zaloguj</v-btn>
+          <v-btn block @click="login">Zaloguj</v-btn>
         </div>
         <div class="pa-2">
           <v-btn block>Wyloguj</v-btn>
@@ -38,11 +38,11 @@ export default {
   data () {
     return {
       items: [
-        { title: 'Dashboard', icon: 'dashboard'},
-        { title: 'Quiz', icon: 'play_circle_outline' },
-        { title: 'Konto', icon: 'account_box' },
-        { title: 'Admin', icon: 'gavel' },
-        { title: 'O autorze', icon: 'person', route: "/about" }
+        { title: 'Dashboard', icon: 'dashboard', color: '#66BB6A'},
+        { title: 'Quiz', icon: 'play_circle_outline', color: '#43A047' },
+        { title: 'Konto', icon: 'account_box', color: '#388E3C' },
+        { title: 'Admin', icon: 'gavel', color: '#2E7D32' },
+        { title: 'O autorze', icon: 'person', route: "/about", color: '#1B5E20' }
       ],
       drawer: false
     }
@@ -50,6 +50,9 @@ export default {
   methods :{
     goToSection(route) {
       this.$router.push(route)
+    },
+    login() {
+      this.$router.push("/login")
     }
   }
 }

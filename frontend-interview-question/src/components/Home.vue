@@ -26,7 +26,12 @@
             </div>
 
             <div class="icon">
-              <font-awesome-icon :icon="['fab', 'java']" />
+              <span v-if="question.theme.themeType == 'JAVA'" >
+                <font-awesome-icon :icon="['fab', 'java']" style="color:#FBC02D"/>
+              </span>
+              <span v-if="question.theme.themeType == 'SPRING'" >
+                <font-awesome-icon :icon="['fas', 'leaf']" style="color:#00E676"/>
+              </span>
             </div>
 
             <div class="action">
@@ -79,7 +84,6 @@ export default {
 .icon {
   grid-area: i;
   font-size: 400%;
-  color:#FBC02D;
 }
 .question-content {
   display: grid;

@@ -21,7 +21,7 @@
                 flat
                 class="mb-5"
               >
-                <v-toolbar-title>Login form</v-toolbar-title>
+                <v-toolbar-title>Zaloguj</v-toolbar-title>
               </v-toolbar>
               <v-spacer></v-spacer>
               <v-form
@@ -42,7 +42,7 @@
                   class="mb-5"
                   v-model="credential.password"
                   :rules="passwordRules"
-                  label="Password"
+                  label="Hasło"
                   type="password"
                   required
                   @keyup.enter="validate"
@@ -77,10 +77,10 @@ export default {
       },
       valid: true,
       loginRules: [
-        v => !!v || 'Login is required',
+        v => !!v || 'Login jest wymagany',
       ],
       passwordRules: [
-        v => !!v || 'Password is required',
+        v => !!v || 'Hasło jest wymagane',
       ],
     }
   },
