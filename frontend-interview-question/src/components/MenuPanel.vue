@@ -16,7 +16,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title @click="goToSection(item.route)">{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -38,18 +38,18 @@ export default {
   data () {
     return {
       items: [
-        { title: 'Dashboard', icon: 'dashboard' },
+        { title: 'Dashboard', icon: 'dashboard'},
         { title: 'Quiz', icon: 'play_circle_outline' },
         { title: 'Konto', icon: 'account_box' },
         { title: 'Admin', icon: 'gavel' },
-        { title: 'O autorze', icon: 'person' }
+        { title: 'O autorze', icon: 'person', route: "/about" }
       ],
       drawer: false
     }
   },
-  watch: {
-    drawer(value) {
-      return value;
+  methods :{
+    goToSection(route) {
+      this.$router.push(route)
     }
   }
 }

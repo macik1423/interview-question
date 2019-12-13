@@ -34,10 +34,15 @@ const router = new Router({
             component: () => import("./components/admin/ListQuestionComponent")
         },
 
-        //login
+
         {
             path:"/login",
             component: () => import("./components/Login")
+        },
+
+        {
+            path:"/about",
+            component: () => import("./components/About")
         }
     ]
 });

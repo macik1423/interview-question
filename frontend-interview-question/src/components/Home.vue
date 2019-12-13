@@ -1,43 +1,44 @@
 <template>
-    <div>
-      <go-top :size="50" :bottom="50"></go-top>
-      <v-container>
-        <menu-panel></menu-panel>
-        <v-spacer class="mb-3"></v-spacer>
-        <v-col
-          v-for="(question, i) in questions"
-          :key="i"
+  <div>
+    <menu-panel></menu-panel>
+    <go-top :size="50" :bottom="50"></go-top>
+    <v-container>
+      
+      <v-spacer class="mb-3"></v-spacer>
+      <v-col
+        v-for="(question, i) in questions"
+        :key="i"
+      >
+        <v-card
+            max-width="400"
+            class="mx-auto"
         >
-          <v-card
-              max-width="400"
-              class="mx-auto"
-          >
-            <div class="question-content">
-              <div class="title">
-                <v-card-title
-                  class="headline"
-                  v-text="question.description"
-                ></v-card-title>
-              </div>
-
-              <div class="subtitle">
-                <v-card-subtitle v-text="question.description"></v-card-subtitle>
-              </div>
-
-              <div class="icon">
-                <font-awesome-icon :icon="['fab', 'java']" />
-              </div>
-
-              <div class="action">
-                <v-card-actions>
-                  <v-btn text @click="checkAnswer(question.id)">Sprawdź odpowiedź</v-btn>
-                </v-card-actions>
-              </div>
+          <div class="question-content">
+            <div class="title">
+              <v-card-title
+                class="headline"
+                v-text="question.description"
+              ></v-card-title>
             </div>
-          </v-card>
-        </v-col>
-      </v-container>
-    </div>
+
+            <div class="subtitle">
+              <v-card-subtitle v-text="question.description"></v-card-subtitle>
+            </div>
+
+            <div class="icon">
+              <font-awesome-icon :icon="['fab', 'java']" />
+            </div>
+
+            <div class="action">
+              <v-card-actions>
+                <v-btn text @click="checkAnswer(question.id)">Sprawdź odpowiedź</v-btn>
+              </v-card-actions>
+            </div>
+          </div>
+        </v-card>
+      </v-col>
+    </v-container>
+  </div>
 </template>
 
 <script>
