@@ -51,6 +51,11 @@ public class QuestionController {
 		return questionService.findById(id);
 	}
 	
+	@GetMapping("/admin/questions")
+	public List<Question> getAllAdminQuestions() {
+		return questionService.findAll();
+	}
+	
 	@PutMapping("/admin/questions/{id}")
 	public ResponseEntity<Question> updateQuestion(@PathVariable long id, @RequestBody Question question) {
 		Question questionUpdate = questionService.save(question);

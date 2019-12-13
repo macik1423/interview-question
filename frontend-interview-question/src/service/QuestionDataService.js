@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const COURSE_API_URL = "http://localhost:8080";
+const COURSE_API_URL = "https://localhost:8443";
 
 class QuestionDataService {
     retrieveQuestion(id) {
@@ -11,6 +11,9 @@ class QuestionDataService {
     }
 
     //admin panel
+    retrieveAllQuestionsAdmin() {
+        return axios.get(`${COURSE_API_URL}/admin/questions`);
+    }
     deleteQuestionAdmin(id) {
         return axios.delete(`${COURSE_API_URL}/admin/questions/${id}`);
     }

@@ -1,6 +1,5 @@
 package com.kowalik.application.configuration;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.context.annotation.Bean;
@@ -42,6 +41,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http
 			.cors()
 			.and()
+			.headers().frameOptions().disable() //h2console
+			.and()
 			//remove csrf and state in session because jwt we do not need them
 			.csrf().disable()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -52,7 +53,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			.authorizeRequests()
 			//configure access rules
 			.antMatchers("/login").permitAll()
-			.antMatchers("/admin").hasRole("ADMIN");
+			.antMatchers("/h2-console/**").permitAll()
+			.antMatchers("/questions/**").permitAll()
+			.antMatchers("/admin/**").hasRole("ADMIN");
 	}
 	
 	@Bean

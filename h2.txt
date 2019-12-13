@@ -1,9 +1,12 @@
 insert into theme values(1,'JAVA');
 insert into theme values(2,'SPRING');
-insert into question values(1,'odpowiedz1','pytanie1',1);
-insert into question values(2,'odpowiedz2','pytanie2',1);
-insert into question values(3,'odpowiedz3','pytanie3',2);
-insert into question values(4,'odpowiedz4','pytanie4',2);
+insert into questions values(1,'odpowiedz1','pytanie1',1);
+insert into questions values(2,'odpowiedz2','pytanie2',1);
+insert into questions values(3,'odpowiedz3','pytanie3',2);
+insert into questions values(4,'odpowiedz4','pytanie4',2);
+insert into questions values(5,'odpowiedz5','pytanie5',2);
+insert into questions values(6,'odpowiedz6','pytanie6',2);
 
 select * from question left join theme on question.theme_id = theme.id 
 select * from theme
+select * from questions

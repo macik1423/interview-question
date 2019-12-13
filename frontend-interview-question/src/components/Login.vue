@@ -31,7 +31,7 @@
                 lazy-validation
               >
                 <v-text-field
-                  v-model="credential.username"
+                  v-model="credential.login"
                   :rules="loginRules"
                   label="Login"
                   type="text"
@@ -72,7 +72,7 @@ export default {
   data() {
     return {
       credential: {
-        username:'',
+        login:'',
         password:''
       },
       valid: true,
@@ -91,7 +91,9 @@ export default {
         LoginService.login(this.credential)
         .then(response => response)
         .then(result => {
-          console.log(result);
+          let token = result.headers.authorization;
+          localStorage.setItem("token", token);
+          console.log(token);
         })
       }
     }

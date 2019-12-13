@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" v-if="isPermission">
         <h3>All question</h3>
         <div v-if="message" class="alert alert-success">
             {{ message }}
@@ -39,6 +39,9 @@
             </div>
         </div>
     </div>
+    <div v-else>
+        <p>You have no permissions to see that page</p>
+    </div>
 </template>
 
 <script>
@@ -49,14 +52,19 @@ export default{
         return {
             questions: [],
             message: null,
+            isPermission: true
         };
     },
     methods: {
         refreshQuestions() {
-            QuestionDataService.retrieveAllQuestions()
+            QuestionDataService.retrieveAllQuestionsAdmin()
                 .then(response => {
                     this.questions = response.data;
-                });
+                })
+                .catch(() => {
+                    this.isPermission = false
+                    this.$router.push(`/login`);
+                }) 
         }, 
         deleteQuestionClicked(id) {
             QuestionDataService.deleteQuestionAdmin(id)
