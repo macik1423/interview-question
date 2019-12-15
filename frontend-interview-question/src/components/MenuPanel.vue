@@ -14,16 +14,15 @@
           <v-list-item-icon>
             <v-icon :color="item.color">{{ item.icon }}</v-icon>
           </v-list-item-icon>
-
           <v-list-item-content>
-            <v-list-item-title @click="goToSection(item.route)">{{ item.title }}</v-list-item-title>
+            <v-list-item-title><router-link :to="item.route" class="link">{{ item.title }}</router-link></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block @click="login">Zaloguj</v-btn>
+          <v-btn block><router-link :to="'/login'" class="link">Zaloguj</router-link></v-btn>
         </div>
         <div class="pa-2">
           <v-btn block>Wyloguj</v-btn>
@@ -38,22 +37,24 @@ export default {
   data () {
     return {
       items: [
-        { title: 'Dashboard', icon: 'dashboard', color: '#66BB6A'},
-        { title: 'Quiz', icon: 'play_circle_outline', color: '#43A047' },
-        { title: 'Konto', icon: 'account_box', color: '#388E3C' },
-        { title: 'Admin', icon: 'gavel', color: '#2E7D32' },
-        { title: 'O autorze', icon: 'person', route: "/about", color: '#1B5E20' }
+        { title: 'Dashboard', icon: 'dashboard'},
+        { title: 'Quiz', icon: 'play_circle_outline' },
+        { title: 'Konto', icon: 'account_box' },
+        { title: 'Admin', icon: 'gavel' },
+        { title: 'O autorze', icon: 'person', route: "/about" }
       ],
       drawer: false
     }
   },
   methods :{
-    goToSection(route) {
-      this.$router.push(route)
-    },
-    login() {
-      this.$router.push("/login")
-    }
+   
   }
 }
 </script>
+
+<style scoped>
+.link {
+  text-decoration: none;
+  color: black;
+}
+</style>
