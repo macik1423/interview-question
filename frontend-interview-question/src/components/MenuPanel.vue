@@ -25,9 +25,7 @@
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block>
-            <router-link :to="'/login'" class="link">Zaloguj</router-link>
-          </v-btn>
+          <v-btn block to="/login" class="link">Zaloguj</v-btn>
         </div>
         <div class="pa-2">
           <v-btn block>Wyloguj</v-btn>

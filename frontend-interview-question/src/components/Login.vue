@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import LoginService from '../service/LoginService';
+// import LoginService from '../service/LoginService';
 
 export default {
   data() {
@@ -86,16 +86,16 @@ export default {
   },
   methods: {
     validate() {
-      if (this.$refs.form.validate()) {
-        this.snackbar = true
-        LoginService.login(this.credential)
-        .then(response => response)
-        .then(result => {
-          let token = result.headers.authorization;
-          localStorage.setItem("token", token);
-          console.log(token);
-        })
-      }
+      this.$store.dispatch("LOGIN", {
+        login: this.login,
+        password: this.password
+      })
+      .then(() => {
+        this.$router.push("");
+      })
+      .catch(() => {
+        
+      })
     }
   },
 }
