@@ -25,7 +25,9 @@
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block><router-link :to="'/login'" class="link">Zaloguj</router-link></v-btn>
+          <v-btn block>
+            <router-link :to="'/login'" class="link">Zaloguj</router-link>
+          </v-btn>
         </div>
         <div class="pa-2">
           <v-btn block>Wyloguj</v-btn>
@@ -37,28 +39,25 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       items: [
-        { title: 'Dashboard', icon: 'dashboard', route: "/"},
-        { title: 'Quiz', icon: 'play_circle_outline', route: ""},
-        { title: 'Konto', icon: 'account_box', route: ""},
-        { title: 'Admin', icon: 'gavel', route: "" },
-        { title: 'O autorze', icon: 'person', route: "/about" }
+        { title: "Dashboard", icon: "dashboard", route: "/" },
+        { title: "Quiz", icon: "play_circle_outline", route: "" },
+        { title: "Konto", icon: "account_box", route: "" },
+        { title: "Admin", icon: "gavel", route: "" },
+        { title: "O autorze", icon: "person", route: "/about" }
       ],
-      drawer: false,
-    }
+      drawer: false
+    };
   },
-  methods :{
-   
-  },
+  methods: {},
   props: {
     color: {
       type: String
     }
   }
-  
-}
+};
 </script>
 
 <style scoped>
@@ -66,5 +65,4 @@ export default {
   text-decoration: none;
   color: black;
 }
-
 </style>
