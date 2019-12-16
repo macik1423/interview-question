@@ -10,14 +10,17 @@
 
     <v-navigation-drawer app v-model="drawer" height="500" width="256">
       <v-list>
-        <v-list-item v-for="item in items" :key="item.title" link>
-          <v-list-item-icon>
-            <v-icon :color="item.color">{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title><router-link :to="item.route" class="link">{{ item.title }}</router-link></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        <v-list-item-group mandatory color="indigo">
+          <v-list-item v-for="item in items" :key="item.title" router :to="item.route">
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
 
       <template v-slot:append>
@@ -37,18 +40,24 @@ export default {
   data () {
     return {
       items: [
-        { title: 'Dashboard', icon: 'dashboard'},
-        { title: 'Quiz', icon: 'play_circle_outline' },
-        { title: 'Konto', icon: 'account_box' },
-        { title: 'Admin', icon: 'gavel' },
+        { title: 'Dashboard', icon: 'dashboard', route: "/"},
+        { title: 'Quiz', icon: 'play_circle_outline', route: ""},
+        { title: 'Konto', icon: 'account_box', route: ""},
+        { title: 'Admin', icon: 'gavel', route: "" },
         { title: 'O autorze', icon: 'person', route: "/about" }
       ],
-      drawer: false
+      drawer: false,
     }
   },
   methods :{
    
+  },
+  props: {
+    color: {
+      type: String
+    }
   }
+  
 }
 </script>
 
@@ -57,4 +66,5 @@ export default {
   text-decoration: none;
   color: black;
 }
+
 </style>
