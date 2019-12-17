@@ -16,7 +16,7 @@ public class ThemeTypeController {
 		this.themeTypeService = themeTypeService;
 	}
 	
-	@GetMapping("/themeType")
+	@GetMapping("/api/themeType")
 	public List<ThemeType> findAll() {
 		return themeTypeService.getAll();
 	}

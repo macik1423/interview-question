@@ -1,9 +1,9 @@
 import Vue from 'vue';
-import Router from 'vue-router';
+import VueRouter from 'vue-router';
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
-const router = new Router({
+const router = new VueRouter({
     mode: 'history', //use browser history
     routes: [
         //Question
@@ -11,10 +11,6 @@ const router = new Router({
             path: "/",
             name: "Home",
             component: () => import("./components/Home")
-        },
-        {
-            path: "/questions/:id",
-            component: () => import("./components/question/QuestionComponent")
         },
 
         //admin

@@ -5,11 +5,12 @@ export default {
   getters: {},
   mutations: {},
   actions: {
-    LOGIN: ({commit, payload}) => {
+    LOGIN: ({commit}, payload) => {
+      console.log(commit);
       return new Promise((resolve, reject) => {
         axios
           .post(`login`, payload)
-          .then(({data, status}) => {
+          .then(({status}) => {
             if(status === 200) {
               resolve(true);
             }

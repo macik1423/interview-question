@@ -7,7 +7,7 @@ class QuestionDataService {
         return axios.get(`${COURSE_API_URL}/questions/${id}`);
     }
     retrieveAllQuestions() {
-        return axios.get(`${COURSE_API_URL}/questions`);
+        return axios.get(`${COURSE_API_URL}/api/questions`);
     }
 
     //admin panel

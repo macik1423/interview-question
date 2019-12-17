@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:8081" )
 @RestController
-
 public class UserController {
 	private UserService userService;
 	
@@ -15,7 +14,7 @@ public class UserController {
 		this.userService = userService;
 	}
 	
-	@GetMapping("/users")
+	@GetMapping("/api/users")
 	public List<User> users() {
 		return userService.findAll();
 	}

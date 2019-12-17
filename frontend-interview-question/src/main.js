@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from "./routes";
 import axios from 'axios';
-import store from './stores/store'
+import { store } from './stores/store'
 //fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUserSecret, faSeedling, faLeaf} from '@fortawesome/free-solid-svg-icons'; //fas 

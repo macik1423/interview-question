@@ -18,12 +18,12 @@ public class ThemeController {
 		this.themeService = themeService;
 	}
 	
-	@GetMapping("/theme")
+	@GetMapping("/api/theme")
 	public List<Theme> getAllThemes() {
 		return themeService.findAll();
 	}
 	
-	@GetMapping("/theme/{id}")
+	@GetMapping("/api/theme/{id}")
 	public Optional<Theme> getThemeById(@PathVariable long id) {
 		return themeService.findById(id);
 	}
