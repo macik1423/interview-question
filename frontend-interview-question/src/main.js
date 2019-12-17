@@ -1,8 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from "./routes";
-import axios from 'axios';
-import { store } from './stores/store'
+import { store } from './store/store'
 //fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUserSecret, faSeedling, faLeaf} from '@fortawesome/free-solid-svg-icons'; //fas 
@@ -14,8 +13,6 @@ library.add(faFontAwesome, faJava); //fab
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
-
-axios.defaults.baseURL = "https://localhost:8443/";
 
 new Vue({
   router,

@@ -39,7 +39,6 @@
 </template>
 
 <script>
-// import LoginService from '../service/LoginService';
 
 export default {
   data() {
@@ -55,18 +54,13 @@ export default {
   },
   methods: {
     validate() {
-      console.log(this.$store);
-      this.$store
-        .dispatch("LOGIN", {
-          login: this.credential.login,
-          password: this.credential.password
-        })
-        .then(() => {
-          this.$router.push("/");
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      this.$store.dispatch('retrieveToken', {
+        login: this.credential.login,
+        password: this.credential.password
+      })
+      .then(() => {
+        this.$router.push("/")
+      })
     }
   }
 };

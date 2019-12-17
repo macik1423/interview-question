@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
     </v-app-bar>
 
-    <v-navigation-drawer app v-model="drawer" height="500" width="256">
+    <v-navigation-drawer app v-model="drawer" height="400" width="256">
       <v-list>
         <v-list-item-group mandatory color="indigo">
           <v-list-item v-for="item in items" :key="item.title" router :to="item.route">
@@ -24,11 +24,11 @@
       </v-list>
 
       <template v-slot:append>
-        <div class="pa-2">
+        <div class="pa-2" v-if="!loggedIn">
           <v-btn block to="/login" class="link">Zaloguj</v-btn>
         </div>
-        <div class="pa-2">
-          <v-btn block>Wyloguj</v-btn>
+        <div class="pa-2" v-else>
+          <v-btn block to="/logout" class="link">Wyloguj</v-btn>
         </div>
       </template>
     </v-navigation-drawer>
@@ -53,6 +53,11 @@ export default {
   props: {
     color: {
       type: String
+    }
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.getters.loggedIn;
     }
   }
 };

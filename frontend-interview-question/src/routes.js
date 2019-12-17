@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import { store } from './store/store';
 
 Vue.use(VueRouter);
 
@@ -27,15 +28,21 @@ const router = new VueRouter({
         {
             path: "/admin",
             name: "Admin panel",
-            component: () => import("./components/admin/ListQuestionComponent")
+            component: () => import("./components/admin/ListQuestionComponent"),
+            meta: {
+                requiresAuth: true
+            }
         },
 
 
         {
             path:"/login",
-            component: () => import("./components/Login")
+            component: () => import("./components/auth/Login"),
         },
-
+        {
+            path:"/logout",
+            component: () => import("./components/auth/Logout")
+        },
         {
             path:"/about",
             component: () => import("./components/About")
@@ -43,4 +50,27 @@ const router = new VueRouter({
     ]
 });
 
+router.beforeEach((to, from, next) => {
+    if(to.matched.some(record => record.meta.requiresAuth)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if(!store.getters.loggedIn) {
+            next({
+                name:'login',
+            }) 
+        } else {
+            next()    
+        }
+    } else if(to.matched.some(record => record.meta.requiresVisitor)) {
+        if(store.getters.loggedIn) {
+            next({
+                name:'admin',
+            }) 
+        } else {
+            next()    
+        }
+    }else {
+        next()
+    }
+})
 export default router;
