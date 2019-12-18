@@ -1,5 +1,7 @@
 <template>
-    <div class="container" v-if="isPermission">
+
+    <div class="container">
+        
         <h3>All question</h3>
         <div v-if="message" class="alert alert-success">
             {{ message }}
@@ -39,13 +41,10 @@
             </div>
         </div>
     </div>
-    <div v-else>
-        <p>You have no permissions to see that page</p>
-    </div>
 </template>
 
 <script>
-import QuestionDataService from '../../service/QuestionDataService'; //musi wyjsc z question ../ i z components ../
+
 export default{
     name: "Questions",
     data() {
@@ -56,32 +55,10 @@ export default{
         };
     },
     methods: {
-        refreshQuestions() {
-            QuestionDataService.retrieveAllQuestionsAdmin()
-                .then(response => {
-                    this.questions = response.data;
-                })
-                .catch(() => {
-                    this.isPermission = false
-                    this.$router.push(`/login`);
-                }) 
-        }, 
-        deleteQuestionClicked(id) {
-            QuestionDataService.deleteQuestionAdmin(id)
-                .then(() => {
-                    this.message = `Delete of question ${id} Successful`;
-                    this.refreshQuestions();
-                })
-        }, 
-        updateQuestionClicked(id) {
-            this.$router.push(`/admin/questions/${id}`);
-        },
-        addQuestionClicked() {
-            this.$router.push('/admin/newQuestion');
-        }, 
+        
     },
     created() {
-        this.refreshQuestions();
+        this.$store.dispatch('retrieveAdminQuestions')
     }
 };
 </script>

@@ -43,13 +43,15 @@ export default {
         { title: "Dashboard", icon: "dashboard", route: "/" },
         { title: "Quiz", icon: "play_circle_outline", route: "" },
         { title: "Konto", icon: "account_box", route: "" },
-        { title: "Admin", icon: "gavel", route: "" },
+        { title: "Admin", icon: "gavel", route: "/admin" },
         { title: "O autorze", icon: "person", route: "/about" }
       ],
       drawer: false
     };
   },
-  methods: {},
+  methods: {
+    
+  },
   props: {
     color: {
       type: String

@@ -30,6 +30,9 @@
 
                 <v-btn :disabled="!valid" color="primary" @click.prevent="validate()">Login</v-btn>
               </v-form>
+              <div v-if="isError">
+                Błąd podczas logowania
+              </div>
             </v-card>
           </v-flex>
         </v-layout>
@@ -45,11 +48,12 @@ export default {
     return {
       credential: {
         login: "",
-        password: ""
+        password: "", 
       },
       valid: true,
       loginRules: [v => !!v || "Login jest wymagany"],
-      passwordRules: [v => !!v || "Hasło jest wymagane"]
+      passwordRules: [v => !!v || "Hasło jest wymagane"],
+      isError: false,
     };
   },
   methods: {
@@ -60,6 +64,9 @@ export default {
       })
       .then(() => {
         this.$router.push("/")
+      })
+      .catch(()=>{
+        this.isError = true;
       })
     }
   }

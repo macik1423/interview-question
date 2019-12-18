@@ -10,39 +10,33 @@ const router = new VueRouter({
         //Question
         {
             path: "/",
-            name: "Home",
             component: () => import("./components/Home")
         },
 
         //admin
         {
-            path: "/admin/questions/:id",
-            name: "Admin panel update Question",
-            component: () => import("./components/admin/UpdateQuestionComponent")
-        },
-        {
-            path: "/admin/newQuestion",
-            name: "Admin panel add Question",
-            component: () => import("./components/admin/AddQuestionComponent")
-        },
-        {
             path: "/admin",
-            name: "Admin panel",
             component: () => import("./components/admin/ListQuestionComponent"),
             meta: {
-                requiresAuth: true
+                requiresAdmin: true
             }
         },
-
 
         {
             path:"/login",
             component: () => import("./components/auth/Login"),
+            meta: {
+                requiresLogged: true
+            }
         },
         {
             path:"/logout",
-            component: () => import("./components/auth/Logout")
+            component: () => import("./components/auth/Logout"),
+            meta: {
+                requiresVisitor: true
+            }
         },
+
         {
             path:"/about",
             component: () => import("./components/About")
@@ -56,21 +50,45 @@ router.beforeEach((to, from, next) => {
         // if not, redirect to login page.
         if(!store.getters.loggedIn) {
             next({
-                name:'login',
+                path: '/login',
+            }) 
+        } else {
+            next()    
+        }
+    } else if(to.matched.some(record => record.meta.requiresLogged)) {
+        // this route requires logged, check if logged in 
+        // if yes, redirect to home page, prevent to open login form
+        if(store.getters.loggedIn) {
+            next({
+                path: '/',
             }) 
         } else {
             next()    
         }
     } else if(to.matched.some(record => record.meta.requiresVisitor)) {
-        if(store.getters.loggedIn) {
+        // this route require visitor, check if logged in 
+        // if not, redirect to home page, prevent to open logout page if user not logged
+        if(!store.getters.loggedIn) {
             next({
-                name:'admin',
+                path: '/',
             }) 
         } else {
             next()    
         }
-    }else {
+    } else if(to.matched.some(record => record.meta.requiresAdmin)) {
+        // this route require admin, check if logged in 
+        // if not, redirect to home page, prevent to open admin page if user not logged
+        if(!store.getters.loggedIn) {
+            next({
+                path: '/login',
+            }) 
+        } else {
+            next()    
+        }
+    } 
+    else {
         next()
     }
 })
+
 export default router;
