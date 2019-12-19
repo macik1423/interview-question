@@ -8,7 +8,6 @@
             <li>Vue</li>
             <li>Vuetify</li>
         </ul>
-        <p>jak i samej znajomości Javy. Może kiedyś komuś pomoże.</p>
     </div>
 </template>
 

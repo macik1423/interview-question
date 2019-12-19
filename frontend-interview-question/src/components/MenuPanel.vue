@@ -1,38 +1,38 @@
 <template>
-  <nav>
-    <v-app-bar>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="grey--text">
-        <span class="font-weight-light">Pytania rekrutacyjne z Javy</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-app-bar>
+    <nav>
+      <v-app-bar>
+        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-toolbar-title class="grey--text">
+          <span class="font-weight-light">Pytania rekrutacyjne z Javy</span>
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+      </v-app-bar>
 
-    <v-navigation-drawer app v-model="drawer" height="400" width="256">
-      <v-list>
-        <v-list-item-group mandatory color="indigo">
-          <v-list-item v-for="item in items" :key="item.title" router :to="item.route">
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
+      <v-navigation-drawer app v-model="drawer" height="400" width="256">
+        <v-list>
+          <v-list-item-group mandatory color="indigo">
+            <v-list-item v-for="item in items" :key="item.title" router :to="item.route">
+              <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
 
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
+              <v-list-item-content>
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
 
-      <template v-slot:append>
-        <div class="pa-2" v-if="!loggedIn">
-          <v-btn block to="/login" class="link">Zaloguj</v-btn>
-        </div>
-        <div class="pa-2" v-else>
-          <v-btn block to="/logout" class="link">Wyloguj</v-btn>
-        </div>
-      </template>
-    </v-navigation-drawer>
-  </nav>
+        <template v-slot:append>
+          <div class="pa-2" v-if="!loggedIn">
+            <v-btn block to="/login" class="link">Zaloguj</v-btn>
+          </div>
+          <div class="pa-2" v-else>
+            <v-btn block to="/logout" class="link">Wyloguj</v-btn>
+          </div>
+        </template>
+      </v-navigation-drawer>
+    </nav>
 </template>
 
 <script>
