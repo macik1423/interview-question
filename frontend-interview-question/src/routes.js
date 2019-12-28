@@ -89,6 +89,11 @@ router.beforeEach((to, from, next) => {
     else {
         next()
     }
+    if (to.path === "/" && from.path === "/login"){
+        store.state.fromLoginPage = true;
+    } else {
+        store.state.fromLoginPage = false;
+    }
 })
 
 export default router;

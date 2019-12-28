@@ -8,7 +8,7 @@
         <v-spacer></v-spacer>
       </v-app-bar>
 
-      <v-navigation-drawer app v-model="drawer" height="400" width="256">
+      <v-navigation-drawer app v-model="drawer" height="400" width="256" temporary>
         <v-list>
           <v-list-item-group mandatory color="indigo">
             <v-list-item v-for="item in items" :key="item.title" router :to="item.route">
@@ -46,7 +46,7 @@ export default {
         { title: "Admin", icon: "gavel", route: "/admin" },
         { title: "O autorze", icon: "person", route: "/about" }
       ],
-      drawer: false
+      drawer: null
     };
   },
   methods: {

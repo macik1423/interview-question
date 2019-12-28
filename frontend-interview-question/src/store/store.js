@@ -9,23 +9,51 @@ axios.defaults.baseURL = "https://localhost:8443";
 export const store = new Vuex.Store({
   state: {
     token: localStorage.getItem('token') || null,
-    questions:[]
+    questions:[], 
+    themes: [],
+    fromLoginPage: false,
   },
   getters: {
     loggedIn(state) {
-      return state.token !== null
+      return state.token !== null;
+    },
+    questions(state) {
+      return state.questions;
+    },
+    themes(state) {
+      return state.themes;
     }
   },
   mutations: {
     retrieveToken(state, token) {
-      state.token = token
+      state.token = token;
     },
     destroyToken(state) {
-      state.token = null
+      state.token = null;
     },
     retrieveAdmin(state, questions) {
-      state.questions = questions
+      state.questions = questions;
     },
+    retrieveQuestions(state, questions) {
+      state.questions = questions;
+    }, 
+    retrieveThemes(state, themes) {
+      state.themes = themes;
+    },
+    addQuestion(state, question) {
+      state.questions.push({
+        theme: {
+          id: question.theme.id,
+          type: question.theme.type
+        },
+        description: question.description,
+        answer: question.answer
+      })
+    },
+    deleteQuestion(state, id) {
+      const index = state.questions.findIndex(item => item.id === id);
+      state.questions.splice(index, 1);
+    }
   },
   actions: {
     destroyToken(context) {
@@ -66,5 +94,53 @@ export const store = new Vuex.Store({
       })
     }, 
 
+    retrieveQuestions(context) {
+      axios.get('/api/questions')
+        .then(response => {
+          context.commit('retrieveQuestions',response.data)
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }, 
+
+    retrieveThemes(context) {
+      axios.get('/api/theme') 
+      .then(response => {
+        console.log(response.data);
+        context.commit('retrieveThemes', response.data)
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+
+    addQuestion(context, question) {
+      axios.post('/api/admin/newQuestion', {
+        theme: {
+          id: question.theme.id,
+          type: question.theme.type
+        },
+        description: question.description,
+        answer: question.answer
+      })
+      .then(response => {
+        context.commit('addQuestion', response.data)
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+    
+    deleteQuestion(context, id) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      axios.delete('/api/admin/questions/'+id)
+      .then(() => {
+        context.commit('deleteQuestion', id)
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    }
   }
 })

@@ -15,10 +15,10 @@
 
           <v-col :cols="3">
             <div class="icon">
-              <span v-if="question.theme.themeType == 'JAVA'">
+              <span v-if="question.theme.type == 'JAVA'">
                 <font-awesome-icon :icon="['fab', 'java']" style="color:#FBC02D" />
               </span>
-              <span v-if="question.theme.themeType == 'SPRING'">
+              <span v-if="question.theme.type == 'SPRING'">
                 <font-awesome-icon :icon="['fas', 'leaf']" style="color:#00E676" />
               </span>
             </div>

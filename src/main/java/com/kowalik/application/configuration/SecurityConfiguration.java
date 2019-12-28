@@ -40,8 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.cors()
-			.and()
-			.headers().frameOptions().disable() //h2console
+//			.and()
+//			.headers().frameOptions().disable() //h2console
 			.and()
 			//remove csrf and state in session because jwt we do not need them
 			.csrf().disable()
@@ -54,7 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			//configure access rules
 			.antMatchers("/login").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
-			.antMatchers("/questions/**").permitAll()
+			.antMatchers("/api/questions/**").permitAll()
 			.antMatchers("/admin/**").hasRole("ADMIN");
 	}
 	

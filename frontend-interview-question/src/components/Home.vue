@@ -8,11 +8,23 @@
         <question-component :question="question"></question-component>
       </v-col>
     </v-container>
+    <v-snackbar
+        v-model="snackbar"
+        :timeout="timeout"
+      >
+        {{ text }}
+        <v-btn
+          color="blue"
+          text
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+    </v-snackbar>
   </div>
 </template>
 
 <script>
-import QuestionDataService from "../service/QuestionDataService";
 import MenuPanel from "../components/MenuPanel.vue";
 import GoTop from "@inotom/vue-go-top";
 import QuestionComponent from "../components/question/QuestionComponent.vue";
@@ -20,15 +32,22 @@ import QuestionComponent from "../components/question/QuestionComponent.vue";
 export default {
   data() {
     return {
-      questions: [],
-      color: ""
+      color: "",
+      snackbar: false,
+      text: 'Zalogowano',
+      timeout: 2000,
+      
     };
   },
-  methods: {
-    refreshQuestions() {
-      QuestionDataService.retrieveAllQuestions().then(response => {
-        this.questions = response.data;
-      });
+  computed: {
+    questions() {
+      return this.$store.getters.questions;
+    },
+  },
+  created() {
+    this.$store.dispatch('retrieveQuestions');
+    if(this.$store.state.token !== null && this.$store.state.fromLoginPage) {
+      this.snackbar = true;
     }
   },
   components: {
@@ -36,9 +55,7 @@ export default {
     GoTop,
     QuestionComponent
   },
-  created() {
-    this.refreshQuestions();
-  }
+  
 };
 </script>
 

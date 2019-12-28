@@ -57,13 +57,13 @@ export default {
     };
   },
   methods: {
-    validate() {
-      this.$store.dispatch('retrieveToken', {
+    async validate() {
+      await this.$store.dispatch('retrieveToken', {
         login: this.credential.login,
         password: this.credential.password
       })
       .then(() => {
-        this.$router.push("/")
+        this.$router.push("/");
       })
       .catch(()=>{
         this.isError = true;
