@@ -57,18 +57,36 @@ export default {
     };
   },
   methods: {
-    async validate() {
-      await this.$store.dispatch('retrieveToken', {
+    validate() {
+      this.$store.dispatch('retrieveToken', {
         login: this.credential.login,
         password: this.credential.password
       })
       .then(() => {
+        localStorage.setItem('login',this.credential.login);
+        Array.from(this.getUsers).forEach((item) => {
+          if(item.username === this.credential.login && item.roles==="ADMIN") {
+            localStorage.setItem('isAdmin',true);
+          } else {
+            localStorage.removeItem('isAdmin');
+          }
+        })
         this.$router.push("/");
       })
-      .catch(()=>{
+      .catch((error) => {
+        console.log(error);
         this.isError = true;
       })
-    }
+    },
+    
+  },
+  computed: {
+    getUsers() {
+      return this.$store.getters.users;
+    }    
+  },
+  created() {
+    this.$store.dispatch('retrieveUsers');
   }
 };
 </script>

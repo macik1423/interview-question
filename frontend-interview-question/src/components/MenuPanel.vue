@@ -1,17 +1,22 @@
 <template>
     <nav>
-      <v-app-bar>
+      <v-toolbar>
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title class="grey--text">
           <span class="font-weight-light">Pytania rekrutacyjne z Javy</span>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-      </v-app-bar>
+        <v-toolbar-items class="grey--text">
+          <span>Zalogowano jako: {{ login }}</span>
+        </v-toolbar-items>
+        
+      </v-toolbar>
 
       <v-navigation-drawer app v-model="drawer" height="400" width="256" temporary>
         <v-list>
           <v-list-item-group mandatory color="indigo">
             <v-list-item v-for="item in items" :key="item.title" router :to="item.route">
+              
               <v-list-item-icon>
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-item-icon>
@@ -19,6 +24,7 @@
               <v-list-item-content>
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
               </v-list-item-content>
+              
             </v-list-item>
           </v-list-item-group>
         </v-list>
@@ -46,11 +52,9 @@ export default {
         { title: "Admin", icon: "gavel", route: "/admin" },
         { title: "O autorze", icon: "person", route: "/about" }
       ],
-      drawer: null
+      drawer: null,
+      login: localStorage.getItem('login') || 'Gosc',
     };
-  },
-  methods: {
-    
   },
   props: {
     color: {
@@ -60,7 +64,22 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
+    }, 
+    isAdmin() {
+      return localStorage.getItem('isAdmin');
+    },
+  }, 
+  methods: {
+    removeFromItemsIfAdmin() {
+      if(!this.isAdmin){
+        this.items.splice(this.items.findIndex((item) => {
+          return item.title === "Admin";
+        }),1);
+      }
     }
+  },
+  created() {
+    this.removeFromItemsIfAdmin();
   }
 };
 </script>

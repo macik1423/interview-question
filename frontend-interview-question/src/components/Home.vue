@@ -8,18 +8,11 @@
         <question-component :question="question"></question-component>
       </v-col>
     </v-container>
-    <v-snackbar
-        v-model="snackbar"
-        :timeout="timeout"
-      >
-        {{ text }}
-        <v-btn
-          color="blue"
-          text
-          @click="snackbar = false"
-        >
-          Close
-        </v-btn>
+    <v-snackbar v-model="snackbar" :timeout="timeout">
+      {{ text }}
+      <v-btn color="blue" text @click="snackbar = false">
+        Zamknij
+      </v-btn>
     </v-snackbar>
   </div>
 </template>
@@ -34,19 +27,20 @@ export default {
     return {
       color: "",
       snackbar: false,
-      text: 'Zalogowano',
+      text: "Zalogowano",
       timeout: 2000,
-      
+      isAdmin: localStorage.getItem("isAdmin") || null
     };
   },
   computed: {
     questions() {
       return this.$store.getters.questions;
     },
+    
   },
   created() {
-    this.$store.dispatch('retrieveQuestions');
-    if(this.$store.state.token !== null && this.$store.state.fromLoginPage) {
+    this.$store.dispatch("retrieveQuestions");
+    if (this.$store.state.token !== null && this.$store.state.fromLoginPage) {
       this.snackbar = true;
     }
   },
@@ -54,10 +48,8 @@ export default {
     MenuPanel,
     GoTop,
     QuestionComponent
-  },
-  
+  }
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

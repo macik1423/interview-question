@@ -24,6 +24,8 @@ export default {
   created() {
     this.$store.dispatch("destroyToken")
     sleep(1000).then(() => {
+      localStorage.removeItem('isAdmin');
+      localStorage.removeItem('login');
       this.$router.push("/");
     })
   }

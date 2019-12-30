@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
     token: localStorage.getItem('token') || null,
     questions:[], 
     themes: [],
+    users: [],
     fromLoginPage: false,
   },
   getters: {
@@ -22,7 +23,10 @@ export const store = new Vuex.Store({
     },
     themes(state) {
       return state.themes;
-    }
+    },
+    users(state) {
+      return state.users;
+    }, 
   },
   mutations: {
     retrieveToken(state, token) {
@@ -53,7 +57,10 @@ export const store = new Vuex.Store({
     deleteQuestion(state, id) {
       const index = state.questions.findIndex(item => item.id === id);
       state.questions.splice(index, 1);
-    }
+    },
+    retrieveUsers(state, users) {
+      state.users = users;
+    }, 
   },
   actions: {
     destroyToken(context) {
@@ -96,18 +103,17 @@ export const store = new Vuex.Store({
 
     retrieveQuestions(context) {
       axios.get('/api/questions')
-        .then(response => {
-          context.commit('retrieveQuestions',response.data)
-        })
-        .catch(error => {
-          console.log(error);
-        })
+      .then(response => {
+        context.commit('retrieveQuestions',response.data)
+      })
+      .catch(error => {
+        console.log(error);
+      })
     }, 
 
     retrieveThemes(context) {
       axios.get('/api/theme') 
       .then(response => {
-        console.log(response.data);
         context.commit('retrieveThemes', response.data)
       })
       .catch(error => {
@@ -137,6 +143,17 @@ export const store = new Vuex.Store({
       axios.delete('/api/admin/questions/'+id)
       .then(() => {
         context.commit('deleteQuestion', id)
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+
+    retrieveUsers(context) {
+      axios.get('/api/users')
+      .then(response => {
+        console.log(response.data);
+        context.commit('retrieveUsers',response.data)
       })
       .catch(error => {
         console.log(error);
