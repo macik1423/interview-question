@@ -67,9 +67,7 @@ export default {
         Array.from(this.getUsers).forEach((item) => {
           if(item.username === this.credential.login && item.roles==="ADMIN") {
             localStorage.setItem('isAdmin',true);
-          } else {
-            localStorage.removeItem('isAdmin');
-          }
+          } 
         })
         this.$router.push("/");
       })

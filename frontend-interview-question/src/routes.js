@@ -21,6 +21,13 @@ const router = new VueRouter({
                 requiresAdmin: true
             }
         },
+        // {
+        //     path: "/admin",
+        //     component: () => import("./components/admin/AdminComponent"),
+        //     meta: {
+        //         requiresAdmin: true
+        //     }
+        // },
 
         {
             path:"/login",
