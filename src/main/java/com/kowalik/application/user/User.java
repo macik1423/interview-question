@@ -1,5 +1,6 @@
 package com.kowalik.application.user;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,12 +12,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6040966605072780341L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue
 	private long id;
 	
 	@Column(nullable = false)
@@ -33,7 +40,7 @@ public class User {
 	
 	public User(String username, String password, String roles, String permissions) {
 		this.username = username;
-		this.password = password;
+		this.password =  password;
 		this.roles = roles;
 		this.permissions = permissions;
 		this.active = 1;
