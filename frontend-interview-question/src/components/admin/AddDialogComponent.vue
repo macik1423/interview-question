@@ -1,10 +1,18 @@
 <template>
   <div class="text-center">
     <v-dialog v-model="dialog" width="500">
-      <template v-slot:activator="{ on }">
-        <v-btn color="red lighten-2" dark v-on="on">
-          Dodaj pytanie
-        </v-btn>
+      <template v-slot:activator="{ on: onTooltip }">
+        <v-col cols="12" sm="12" md="6" offset-md="3">
+          <v-tooltip left>
+            <template v-slot:activator="{ on: onAdd}">
+              <v-btn class="mx-2 mb-10" fab dark color="indigo" v-on="{...onTooltip, ...onAdd}" absolute bottom right fixed>
+                <v-icon dark>mdi-plus</v-icon>
+              </v-btn>
+            </template>
+            <span>Dodaj pytanie</span>
+          </v-tooltip>
+        </v-col>
+        
       </template>
 
       <v-card>

@@ -1,52 +1,70 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { store } from './store/store';
-
+import Home from "./components/Home";
+import AdminComponent from "./components/admin/AdminComponent";
+import QuestionsOptions from "./components/admin/QuestionsOptions";
+import UsersOptions from "./components/admin/UsersOptions";
+import Login from "./components/auth/Login";
+import Logout from "./components/auth/Logout";
+import About from "./components/About";
+import User from "./components/user/UserComponent";
 Vue.use(VueRouter);
 
 const router = new VueRouter({
     mode: 'history', //use browser history
     routes: [
-        //Question
         {
             path: "/",
-            component: () => import("./components/Home")
+            component: Home,
         },
-
-        //admin
         {
             path: "/admin",
-            component: () => import("./components/admin/ListQuestionComponent"),
+            component: AdminComponent,
             meta: {
                 requiresAdmin: true
-            }
+            },
+            children : [
+                {
+                    path:'/questions', 
+                    component: QuestionsOptions,
+                    meta: {
+                        requiresAdmin: true
+                    }
+                },
+                {
+                    path:'/users', 
+                    component: UsersOptions,
+                    meta: {
+                        requiresAdmin: true
+                    }
+                }
+            ]
         },
-        // {
-        //     path: "/admin",
-        //     component: () => import("./components/admin/AdminComponent"),
-        //     meta: {
-        //         requiresAdmin: true
-        //     }
-        // },
-
         {
             path:"/login",
-            component: () => import("./components/auth/Login"),
+            component: Login,
             meta: {
                 requiresLogged: true
             }
         },
         {
             path:"/logout",
-            component: () => import("./components/auth/Logout"),
+            component: Logout,
             meta: {
                 requiresVisitor: true
             }
         },
-
         {
             path:"/about",
-            component: () => import("./components/About")
+            component: About
+        },
+        {
+            path:"/account",
+            component: User,
+            meta: {
+                requiresAuth: true
+            }
         }
     ]
 });

@@ -72,6 +72,7 @@ export default {
         this.$router.push("/");
       })
       .catch((error) => {
+        this.$store.commit("LOADER",false);  
         console.log(error);
         this.isError = true;
       })

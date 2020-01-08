@@ -13,6 +13,7 @@ export const store = new Vuex.Store({
     themes: [],
     users: [],
     fromLoginPage: false,
+    loader: false,
   },
   getters: {
     loggedIn(state) {
@@ -26,7 +27,7 @@ export const store = new Vuex.Store({
     },
     users(state) {
       return state.users;
-    }, 
+    }
   },
   mutations: {
     retrieveToken(state, token) {
@@ -46,6 +47,7 @@ export const store = new Vuex.Store({
     },
     addQuestion(state, question) {
       state.questions.push({
+        id: question.id,
         theme: {
           id: question.theme.id,
           type: question.theme.type
@@ -61,6 +63,9 @@ export const store = new Vuex.Store({
     retrieveUsers(state, users) {
       state.users = users;
     }, 
+    LOADER(state, payload) {
+      state.loader = payload;
+    }
   },
   actions: {
     destroyToken(context) {
@@ -104,6 +109,8 @@ export const store = new Vuex.Store({
     retrieveQuestions(context) {
       axios.get('/api/questions')
       .then(response => {
+        console.log("response data: ");
+        console.log(response.data);
         context.commit('retrieveQuestions',response.data)
       })
       .catch(error => {

@@ -1,17 +1,23 @@
 package com.kowalik.application.question;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.kowalik.application.theme.Theme;
+import com.kowalik.application.user.User;
+import com.kowalik.application.user_question.UserQuestion;
 
 @Entity
 @Table(name = "questions")
@@ -23,7 +29,7 @@ public class Question implements Comparable<Question>, Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@ManyToOne
@@ -35,6 +41,9 @@ public class Question implements Comparable<Question>, Serializable{
 	
 	@Column(name = "answer")
 	private String answer;
+	
+	@OneToMany(mappedBy = "user")
+	private List<UserQuestion> userQuestions = new ArrayList<>();
 	
 	public Question() {
 		
@@ -78,6 +87,7 @@ public class Question implements Comparable<Question>, Serializable{
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
+
 
 	@Override
 	public int hashCode() {

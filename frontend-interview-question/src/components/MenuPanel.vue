@@ -48,7 +48,7 @@ export default {
       items: [
         { title: "Dashboard", icon: "dashboard", route: "/" },
         { title: "Quiz", icon: "play_circle_outline", route: "" },
-        { title: "Konto", icon: "account_box", route: "" },
+        { title: "Konto", icon: "account_box", route: "/account" },
         { title: "Admin", icon: "gavel", route: "/admin" },
         { title: "O autorze", icon: "person", route: "/about" }
       ],

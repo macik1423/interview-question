@@ -8,11 +8,11 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.kowalik.application.user_question.UserQuestion;
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -37,6 +37,9 @@ public class User implements Serializable {
 	private String roles = "";
 	
 	private String permissions = "";
+	
+	@OneToMany(mappedBy = "question")
+	private List<UserQuestion> userQuestions = new ArrayList<>();
 	
 	public User(String username, String password, String roles, String permissions) {
 		this.username = username;

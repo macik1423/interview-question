@@ -8,6 +8,7 @@
             <li>Vue</li>
             <li>Vuetify</li>
         </ul>
+        <img src="https://www.codewars.com/users/macik1423/badges/small">
     </div>
 </template>
 
