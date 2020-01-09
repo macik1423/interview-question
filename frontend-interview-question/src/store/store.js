@@ -109,8 +109,6 @@ export const store = new Vuex.Store({
     retrieveQuestions(context) {
       axios.get('/api/questions')
       .then(response => {
-        console.log("response data: ");
-        console.log(response.data);
         context.commit('retrieveQuestions',response.data)
       })
       .catch(error => {
@@ -159,7 +157,6 @@ export const store = new Vuex.Store({
     retrieveUsers(context) {
       axios.get('/api/users')
       .then(response => {
-        console.log(response.data);
         context.commit('retrieveUsers',response.data)
       })
       .catch(error => {

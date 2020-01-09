@@ -30,9 +30,9 @@
             <v-flex>
               <v-btn text class="ma-2 px-0" @click="selectedQuestion = question">Sprawdź</v-btn>
             </v-flex>
-            <v-flex class="text-right">
-              <v-btn text>umiem</v-btn>
-              <v-btn text>nie umiem</v-btn>
+            <v-flex class="text-right" v-if="this.$store.getters.loggedIn">
+              <v-btn text @click="addKnow">umiem</v-btn>
+              <v-btn text @click="notKnow">nie umiem</v-btn>
             </v-flex>
           </v-card-actions>
         </div>
@@ -60,10 +60,21 @@ export default {
   data() {
     return {
       dialog: false,
-      selectedQuestion: null
+      selectedQuestion: null,
+      know: [],
+      notKnow: [],
     };
   },
-  props: ["question"]
+  props: ["question"],
+  methods: {
+    addKnow() {
+      this.$store.getters.questions.splice(this.$store.getters.questions.indexOf(this.question),1);
+      this.know.push();
+    },
+    addNotKnow() {
+      this.notKnow.push();
+    }
+  }
 };
 </script>
 
