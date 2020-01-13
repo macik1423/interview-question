@@ -4,9 +4,9 @@
     <go-top :size="50" :bottom="50"></go-top>
     <v-container>
       <v-spacer class="mb-3"></v-spacer>
-      <transition-group name="list" tag="p">
+      <transition-group :name = 'name' tag="p">
         <v-col v-for="question in questions" :key="question.id">
-          <question-component :question="question"></question-component>
+          <question-component :question="question" @changeNameTransition = 'updateNameTransition($event)'></question-component>
         </v-col>
       </transition-group>
     </v-container>
@@ -32,12 +32,18 @@ export default {
       text: "Zalogowano",
       timeout: 2000,
       isAdmin: localStorage.getItem("isAdmin") || null, 
+      name: 'list',
     };
   },
   computed: {
     questions() {
       return this.$store.getters.questions;
     },
+  },
+  methods: {
+    updateNameTransition(updatedName) {
+      this.name = updatedName;
+    }
   },
   created() {
     this.$store.dispatch("retrieveQuestions");
@@ -65,5 +71,24 @@ export default {
   opacity: 0;
   transform: translateY(50px);
 }
+
+.know-leave-active {
+  transition: all 2s;
+}
+.know-leave-to {
+  /* background: green; */
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.notKnow-leave-active {
+  transition: all 2s;
+}
+.notKnow-leave-to {
+  /* background: red; */
+  opacity: 0;
+  transform: translateX(50px);
+}
+
 
 </style>

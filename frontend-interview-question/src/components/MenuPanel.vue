@@ -30,11 +30,11 @@
         </v-list>
 
         <template v-slot:append>
-          <div class="pa-2" v-if="!loggedIn">
-            <v-btn block to="/login" class="link">Zaloguj</v-btn>
+          <div class="pa-2" v-if="!loggedIn" >
+            <v-btn tile color="indigo" dark block to="/login">Zaloguj</v-btn>
           </div>
-          <div class="pa-2" v-else>
-            <v-btn block to="/logout" class="link">Wyloguj</v-btn>
+          <div class="pa-2" v-else >
+            <v-btn tile color="indigo" dark block to="/logout">Wyloguj</v-btn>
           </div>
         </template>
       </v-navigation-drawer>
@@ -85,8 +85,5 @@ export default {
 </script>
 
 <style scoped>
-.link {
-  text-decoration: none;
-  color: black;
-}
+
 </style>

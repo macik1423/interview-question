@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-card max-width="600" class="mx-auto">
+    <v-card max-width="600" class="mx-auto" :style="{background: changeColor}">
       <div class="question-content">
-        <div class="title">
+        <div class="title" >
           <v-card-title class="headline" v-text="question.description"></v-card-title>
         </div>
 
@@ -31,7 +31,7 @@
               <v-btn text class="ma-2 px-0" @click="selectedQuestion = question">Sprawdź</v-btn>
             </v-flex>
             <v-flex class="text-right" v-if="this.$store.getters.loggedIn">
-              <v-btn text @click="addKnow">umiem</v-btn>
+              <v-btn text @click="know">umiem</v-btn>
               <v-btn text @click="notKnow">nie umiem</v-btn>
             </v-flex>
           </v-card-actions>
@@ -61,20 +61,29 @@ export default {
     return {
       dialog: false,
       selectedQuestion: null,
-      know: [],
-      notKnow: [],
-    };
+      knowQuestions: [],
+      notKnowQuestions: [],
+      changeColor: ''
+    }
   },
   props: ["question"],
   methods: {
-    addKnow() {
-      this.$store.getters.questions.splice(this.$store.getters.questions.indexOf(this.question),1);
-      this.know.push();
+    async know() {
+      this.changeColor = "green";
+      await this.$emit("changeNameTransition", "know");
+      this.removeQuestion();
+      this.knowQuestions.push();
     },
-    addNotKnow() {
-      this.notKnow.push();
+    async notKnow() {
+      this.changeColor = "red";
+      await this.$emit("changeNameTransition", "notKnow");
+      this.removeQuestion();
+      this.notKnowQuestions.push();
+    },
+    removeQuestion() {
+      this.$store.getters.questions.splice(this.$store.getters.questions.indexOf(this.question),1);
     }
-  }
+  },
 };
 </script>
 
