@@ -64,9 +64,12 @@ export default {
       })
       .then(() => {
         localStorage.setItem('login',this.credential.login);
-        Array.from(this.getUsers).forEach((item) => {
-          if(item.username === this.credential.login && item.roles==="ADMIN") {
+        Array.from(this.getUsers).forEach((user) => {
+          if(user.username === this.credential.login && user.roles==="ADMIN") {
             localStorage.setItem('isAdmin',true);
+          } 
+          if (user.username === this.credential.login) {
+            localStorage.setItem("userId", user.id);
           } 
         })
         this.$router.push("/");

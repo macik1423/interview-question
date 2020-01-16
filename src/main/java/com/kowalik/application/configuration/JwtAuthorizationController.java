@@ -1,8 +1,11 @@
 package com.kowalik.application.configuration;
 
 
-import org.springframework.web.bind.annotation.CrossOrigin;
+import java.security.Principal;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -10,5 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class JwtAuthorizationController {
 	
-	
+	@GetMapping(value = "/username")
+    @ResponseBody
+    public String currentUserName(Principal principal) {
+        return principal.toString();
+    }
 }

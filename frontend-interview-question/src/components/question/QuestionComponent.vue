@@ -7,13 +7,13 @@
         </div>
 
         <v-row>
-          <v-col :cols="9">
+          <v-col cols="9">
             <div class="subtitle">
               <v-card-subtitle v-text="question.description"></v-card-subtitle>
             </div>
           </v-col>
 
-          <v-col :cols="3">
+          <v-col cols="3">
             <div class="icon">
               <span v-if="question.theme.type == 'JAVA'">
                 <font-awesome-icon :icon="['fab', 'java']" style="color:#FBC02D" />
@@ -61,27 +61,34 @@ export default {
     return {
       dialog: false,
       selectedQuestion: null,
-      knowQuestions: [],
-      notKnowQuestions: [],
-      changeColor: ''
+      changeColor: '',
+      questionsAnswered: []
     }
   },
   props: ["question"],
   methods: {
     async know() {
-      this.changeColor = "green";
+      this.changeColor = "#8BC34A";
       await this.$emit("changeNameTransition", "know");
+      // let index = this.questionsAnswered.findIndex(item => item.userId === localStorage.getItem("userId") && item.questionId ===this.question.id)
+
+      // if( index === -1) {
+      //   this.questionsAnswered.push({userId: localStorage.getItem("userId"), questionId: this.question.id, know: true});
+      // } else {
+      //   let questionAnsweredUpdate = this.questionsAnswered.find((item) => {
+      //     return item.userId === localStorage.getItem("userId") && item.questionId ===this.question.id;
+      //   })
+      //   questionAnsweredUpdate.know = true;
+      // }
       this.removeQuestion();
-      this.knowQuestions.push();
     },
     async notKnow() {
-      this.changeColor = "red";
+      this.changeColor = "#FF5722";
       await this.$emit("changeNameTransition", "notKnow");
       this.removeQuestion();
-      this.notKnowQuestions.push();
     },
     removeQuestion() {
-      this.$store.getters.questions.splice(this.$store.getters.questions.indexOf(this.question),1);
+      this.$store.getters.questionsPagination.splice(this.$store.getters.questionsPagination.indexOf(this.question),1);
     }
   },
 };

@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +19,6 @@ public class QuestionService {
 		this.questionRepository = questionRepository;
 	}
 	
-	@Transactional
 	public List<Question> findAll() {
 		return questionRepository.findAll();
 	}
@@ -26,7 +28,6 @@ public class QuestionService {
 		questionRepository.deleteById(id);
 	}
 	
-	@Transactional
 	public Optional<Question> findById(long id) {
 		return questionRepository.findById(id);
 	}
@@ -36,9 +37,23 @@ public class QuestionService {
 		return questionRepository.save(question);
 	}
 	
-	@Transactional
 	public List<Question> findByThemeId(Long themeId) {
 		return questionRepository.findByThemeId(themeId);
+	}
+
+	
+	public Page<Question> findAll(Pageable pageable) {
+		return questionRepository.findAll(pageable);
+	}
+	
+	
+	public long getTotalPages(Pageable pageable) {
+		Page<Question> page = questionRepository.findAll(pageable);
+		return page.getTotalPages();
+	}
+	
+	public long countQuestion() {
+		return questionRepository.count();
 	}
 		
 }	

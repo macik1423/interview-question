@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app> <!-- zle v-app powinno byc tylko jedno na apke ZMIENIC-->
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
@@ -26,6 +26,7 @@ export default {
     sleep(1000).then(() => {
       localStorage.removeItem('isAdmin');
       localStorage.removeItem('login');
+      localStorage.removeItem('userId');
       this.$router.push("/");
     })
   }

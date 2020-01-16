@@ -2,6 +2,7 @@ package com.kowalik.application.user_question;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -12,16 +13,18 @@ import com.kowalik.application.question.Question;
 import com.kowalik.application.user.User;
 
 @Entity
-public class UserQuestion {
-	
+public class UserQuestion implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@EmbeddedId
 	private UserQuestionId id = new UserQuestionId();
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@MapsId("userId")
 	private User user;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@MapsId("questionId")
 	private Question question;
 		
@@ -54,9 +57,6 @@ public class UserQuestion {
 	@Embeddable
 	public static class UserQuestionId implements Serializable {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 		
 		private Long userId;

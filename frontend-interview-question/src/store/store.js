@@ -14,6 +14,10 @@ export const store = new Vuex.Store({
     users: [],
     fromLoginPage: false,
     loader: false,
+    countQuestions: 0,
+    questionsPagination: [],
+    totalPagesPagination: 0,
+    userQuestion: []
   },
   getters: {
     loggedIn(state) {
@@ -27,6 +31,15 @@ export const store = new Vuex.Store({
     },
     users(state) {
       return state.users;
+    },
+    countQuestions(state) {
+      return state.countQuestions;
+    },
+    questionsPagination(state) {
+      return state.questionsPagination;
+    },
+    totalPagesPagination(state) {
+      return state.totalPagesPagination;
     }
   },
   mutations: {
@@ -42,6 +55,15 @@ export const store = new Vuex.Store({
     retrieveQuestions(state, questions) {
       state.questions = questions;
     }, 
+    retrieveCountQuestion(state, countQuestions) {
+      state.countQuestions = countQuestions;
+    },
+    retrieveQuestionsPagination(state, questionsPagination) {
+      state.questionsPagination = questionsPagination;
+    },
+    retrieveTotalPagesPagination(state, totalPagesPagination) {
+      state.totalPagesPagination = totalPagesPagination;
+    },
     retrieveThemes(state, themes) {
       state.themes = themes;
     },
@@ -54,6 +76,17 @@ export const store = new Vuex.Store({
         },
         description: question.description,
         answer: question.answer
+      })
+    },
+    addUserQuestion(state, userId, questionId, know) {
+      state.userQuestion.push({
+        user: {
+          id: userId,
+        },
+        question: {
+          id: questionId
+        },
+        know: know
       })
     },
     deleteQuestion(state, id) {
@@ -116,6 +149,36 @@ export const store = new Vuex.Store({
       })
     }, 
 
+    retrieveCountQuestion(context) {
+      axios.get('/api/questions/countQuestions')
+      .then(response => {
+        context.commit('retrieveCountQuestion', response.data) 
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+
+    retrieveTotalPagesPagination(context) {
+      axios.get('/api/questions/pages/getTotalPages')
+      .then(response => {
+        context.commit('retrieveTotalPagesPagination', response.data)
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+
+    retrieveQuestionsPagination(context, page) {
+      axios.get('/api/questions/pages?page=' + page)
+      .then(response => {
+        context.commit('retrieveQuestionsPagination', response.data)
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+
     retrieveThemes(context) {
       axios.get('/api/theme') 
       .then(response => {
@@ -142,6 +205,26 @@ export const store = new Vuex.Store({
         console.log(error);
       })
     },
+
+    // addUserQuestion(context, userQuestion) {
+    //   axios.post('/api/userQuestion', {
+    //     user: {
+    //       id: userQuestion,
+    //     },
+    //     question: {
+    //       id: questionId
+    //     },
+    //     know: know
+    //   })
+    //   .then(response => {
+    //     console.log(userId, questionId, know);
+    //     context.commit('addUserQuestion', response.data);
+        
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   })
+    // },
     
     deleteQuestion(context, id) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;

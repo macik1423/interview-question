@@ -1,8 +1,15 @@
 package com.kowalik.application.question;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.ServletException;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,10 +27,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class QuestionController {
 	
+	final private int VALUEPAGINATION = 2;
+	
 	private QuestionService questionService;
 	
 	QuestionController(QuestionService questionService) {
 		this.questionService = questionService;
+	}
+	
+	@GetMapping("/questions/pages")
+	public List<Question> getAllQuestions(@PageableDefault(value=VALUEPAGINATION, page=0) Pageable pageable) {
+		Page<Question> page = questionService.findAll(pageable);
+	    return page.getContent();
+	}
+
+	
+	@GetMapping("/questions/countQuestions")
+	public long getCountQuestion() {
+		return questionService.countQuestion();
+	}
+	
+	@GetMapping("/questions/pages/getTotalPages")
+	public long getTotalPages(@PageableDefault(value=VALUEPAGINATION, page=0) Pageable pageable) {
+		Page<Question> page = questionService.findAll(pageable);
+	    return page.getTotalPages();
 	}
 	
 	@GetMapping("/questions")
