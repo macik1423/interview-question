@@ -17,7 +17,8 @@ export const store = new Vuex.Store({
     countQuestions: 0,
     questionsPagination: [],
     totalPagesPagination: 0,
-    userQuestion: []
+    userQuestion: [],
+    questionAnswer: [],
   },
   getters: {
     loggedIn(state) {
@@ -40,6 +41,9 @@ export const store = new Vuex.Store({
     },
     totalPagesPagination(state) {
       return state.totalPagesPagination;
+    },
+    questionAnswered(state) {
+      return state.questionAnswer;
     }
   },
   mutations: {
@@ -78,16 +82,19 @@ export const store = new Vuex.Store({
         answer: question.answer
       })
     },
-    addUserQuestion(state, userId, questionId, know) {
+    addUserQuestion(state, userQuestion) {
       state.userQuestion.push({
-        user: {
-          id: userId,
+        user :{
+          id : userQuestion.userId
         },
-        question: {
-          id: questionId
+        questionId : {
+          id: userQuestion.questionId,
         },
-        know: know
+        know: userQuestion.know
       })
+    },
+    addQuestionAnswer(state, question) {
+      state.questionAnswer.push(question);
     },
     deleteQuestion(state, id) {
       const index = state.questions.findIndex(item => item.id === id);
@@ -206,25 +213,23 @@ export const store = new Vuex.Store({
       })
     },
 
-    // addUserQuestion(context, userQuestion) {
-    //   axios.post('/api/userQuestion', {
-    //     user: {
-    //       id: userQuestion,
-    //     },
-    //     question: {
-    //       id: questionId
-    //     },
-    //     know: know
-    //   })
-    //   .then(response => {
-    //     console.log(userId, questionId, know);
-    //     context.commit('addUserQuestion', response.data);
-        
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   })
-    // },
+    addUserQuestion(context, userQuestion) {
+      axios.post('/api/userQuestion', {
+        user :{
+          id : userQuestion.userId
+        },
+        questionId : {
+          id: userQuestion.questionId,
+        },
+        know: userQuestion.know
+      })
+      .then(response => {
+        context.commit('addUserQuestion', response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
     
     deleteQuestion(context, id) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;

@@ -27,7 +27,13 @@ export default {
     }, function(error) {
       this.$store.commit('LOADER',false);
       return Promise.reject(error);
-    })
+    });
+
+    window.addEventListener('beforeunload', () => {
+      console.log(this.$store.getters.questionAnswered);
+      this.$store.dispatch('addUserQuestion', this.$store.getters.questionAnswered);
+      
+    }, false)
   }
 };
 </script>

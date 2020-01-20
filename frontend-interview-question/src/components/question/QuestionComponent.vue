@@ -62,7 +62,6 @@ export default {
       dialog: false,
       selectedQuestion: null,
       changeColor: '',
-      questionsAnswered: []
     }
   },
   props: ["question"],
@@ -70,25 +69,29 @@ export default {
     async know() {
       this.changeColor = "#8BC34A";
       await this.$emit("changeNameTransition", "know");
-      // let index = this.questionsAnswered.findIndex(item => item.userId === localStorage.getItem("userId") && item.questionId ===this.question.id)
-
-      // if( index === -1) {
-      //   this.questionsAnswered.push({userId: localStorage.getItem("userId"), questionId: this.question.id, know: true});
-      // } else {
-      //   let questionAnsweredUpdate = this.questionsAnswered.find((item) => {
-      //     return item.userId === localStorage.getItem("userId") && item.questionId ===this.question.id;
-      //   })
-      //   questionAnsweredUpdate.know = true;
-      // }
-      this.removeQuestion();
+      this.updateQuestionAnswered(true);
     },
     async notKnow() {
       this.changeColor = "#FF5722";
       await this.$emit("changeNameTransition", "notKnow");
-      this.removeQuestion();
+      this.updateQuestionAnswered(false);
     },
     removeQuestion() {
       this.$store.getters.questionsPagination.splice(this.$store.getters.questionsPagination.indexOf(this.question),1);
+    },
+    updateQuestionAnswered(isKnow) {
+      let index = this.$store.getters.questionAnswered.findIndex(
+        item => item.userId === localStorage.getItem("userId") && item.questionId === this.question.id)
+      if( index === -1) {
+        this.$store.commit('addQuestionAnswer',
+          {userId: localStorage.getItem("userId"), questionId: this.question.id, know: true});
+      } else {
+        let questionAnsweredUpdate =  this.$store.getters.questionAnswered.find((item) => {
+          return item.userId === localStorage.getItem("userId") && item.questionId ===this.question.id;
+        })
+        questionAnsweredUpdate.know = isKnow;
+      }
+      this.removeQuestion();
     }
   },
 };
