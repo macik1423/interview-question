@@ -80,16 +80,29 @@ export default {
       this.$store.getters.questionsPagination.splice(this.$store.getters.questionsPagination.indexOf(this.question),1);
     },
     updateQuestionAnswered(isKnow) {
-      let index = this.$store.getters.questionAnswered.findIndex(
+      let index = this.$store.getters.questionAnswer.findIndex(
         item => item.userId === localStorage.getItem("userId") && item.questionId === this.question.id)
       if( index === -1) {
         this.$store.commit('addQuestionAnswer',
-          {userId: localStorage.getItem("userId"), questionId: this.question.id, know: true});
+          {
+            id : {
+              userId : localStorage.getItem("userId"),
+              questionId : this.question.id
+            },
+            user : {
+              id : localStorage.getItem("userId")
+            },
+            question : {
+              id : this.question.id
+            },
+            know : isKnow
+          }
+        )
       } else {
-        let questionAnsweredUpdate =  this.$store.getters.questionAnswered.find((item) => {
-          return item.userId === localStorage.getItem("userId") && item.questionId ===this.question.id;
+        let questionAnswerUpdate =  this.$store.getters.questionAnswer.find((item) => {
+          return item.user.id === localStorage.getItem("userId") && item.question.id ===this.question.id;
         })
-        questionAnsweredUpdate.know = isKnow;
+        questionAnswerUpdate.know = isKnow;
       }
       this.removeQuestion();
     }

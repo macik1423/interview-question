@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,15 +22,21 @@ public class UserQuestionController {
 		this.userQuestionService = userQuestionService;
 	}
 	
+	@PostMapping("/userQuestions") 
+	public List<UserQuestion> createUserQuestions(@RequestBody List<UserQuestion> userQuestions) {
+		List<UserQuestion> createdUserQuestion = userQuestionService.saveAll(userQuestions);
+		return createdUserQuestion;
+	}
+	
 	@PostMapping("/userQuestion") 
 	public UserQuestion createUserQuestion(@RequestBody UserQuestion userQuestion) {
 		UserQuestion createdUserQuestion = userQuestionService.save(userQuestion);
 		return createdUserQuestion;
 	}
 	
-	@GetMapping("/userQuestion") 
-	public List<UserQuestion> getUserQuestion() {
-		List<UserQuestion> userQuestion = userQuestionService.findAll();
+	@GetMapping("/userQuestions/user/{userId}") 
+	public List<UserQuestion> getUserQuestions(@PathVariable Long userId) {
+		List<UserQuestion> userQuestion = userQuestionService.findQuestionsByUserId(userId);
 		return userQuestion;
 	}
 	

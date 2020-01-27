@@ -18,7 +18,7 @@ export const store = new Vuex.Store({
     questionsPagination: [],
     totalPagesPagination: 0,
     userQuestion: [],
-    questionAnswer: [],
+    questionAnswer: []
   },
   getters: {
     loggedIn(state) {
@@ -42,7 +42,7 @@ export const store = new Vuex.Store({
     totalPagesPagination(state) {
       return state.totalPagesPagination;
     },
-    questionAnswered(state) {
+    questionAnswer(state) {
       return state.questionAnswer;
     }
   },
@@ -72,6 +72,8 @@ export const store = new Vuex.Store({
       state.themes = themes;
     },
     addQuestion(state, question) {
+      //pushuje do state zeby mozna bylo od razu uzyc, reaktywnie, wynik od razu widzimy na stronie, gdy jest jeszcze raz 
+      //ladowana state sie zeruje a dane sa wczytywane z bazy
       state.questions.push({
         id: question.id,
         theme: {
@@ -80,17 +82,6 @@ export const store = new Vuex.Store({
         },
         description: question.description,
         answer: question.answer
-      })
-    },
-    addUserQuestion(state, userQuestion) {
-      state.userQuestion.push({
-        user :{
-          id : userQuestion.userId
-        },
-        questionId : {
-          id: userQuestion.questionId,
-        },
-        know: userQuestion.know
       })
     },
     addQuestionAnswer(state, question) {
@@ -103,6 +94,9 @@ export const store = new Vuex.Store({
     retrieveUsers(state, users) {
       state.users = users;
     }, 
+    retrieveUserQuestions(state) {
+
+    },
     LOADER(state, payload) {
       state.loader = payload;
     }
@@ -213,18 +207,10 @@ export const store = new Vuex.Store({
       })
     },
 
-    addUserQuestion(context, userQuestion) {
-      axios.post('/api/userQuestion', {
-        user :{
-          id : userQuestion.userId
-        },
-        questionId : {
-          id: userQuestion.questionId,
-        },
-        know: userQuestion.know
-      })
+    addUserQuestions(context, userQuestions) {
+      axios.post('/api/userQuestions', userQuestions)
       .then(response => {
-        context.commit('addUserQuestion', response.data);
+        console.log(context, response);
       })
       .catch(error => {
         console.log(error);
@@ -246,6 +232,16 @@ export const store = new Vuex.Store({
       axios.get('/api/users')
       .then(response => {
         context.commit('retrieveUsers',response.data)
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+
+    retrieveUserQuestions(context, userId) {
+      axios.get('/api/userQuestions/' + userId)
+      .then(response => {
+        context.commit('retrieveUserQuestions', response.data)
       })
       .catch(error => {
         console.log(error);

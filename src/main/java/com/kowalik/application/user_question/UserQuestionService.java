@@ -15,12 +15,19 @@ public class UserQuestionService {
 		this.userQuestionRepository = userQuestionRepository;
 	}
 	
-	@Transactional
+	public List<UserQuestion> saveAll(List<UserQuestion> userQuestions) {
+		return userQuestionRepository.saveAll(userQuestions);
+	}
+	
 	public UserQuestion save(UserQuestion userQuestion) {
 		return userQuestionRepository.save(userQuestion);
 	}
 	
 	public List<UserQuestion> findAll() {
 		return userQuestionRepository.findAll();
+	}
+	
+	public List<UserQuestion> findQuestionsByUserId(Long userId) {
+		return userQuestionRepository.findUserQuestionsByUserId(userId);
 	}
 }

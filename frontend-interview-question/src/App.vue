@@ -10,9 +10,16 @@
 import Loader from './components/_loader';
 import axios from 'axios';
 export default {
- components: {Loader},
-
- created() {
+  components: {Loader},
+  methods: {
+    sendToDbWhenTabOrBrowserClosed() {
+      window.addEventListener('beforeunload', () => {
+        this.$store.commit('LOADER',false);
+        this.$store.dispatch('addUserQuestions', this.$store.getters.questionAnswer);
+      }, false)
+    }
+  },
+  created() {
    axios.interceptors.request.use((config) => {
      this.$store.commit("LOADER",true);
      return config;
@@ -29,11 +36,8 @@ export default {
       return Promise.reject(error);
     });
 
-    window.addEventListener('beforeunload', () => {
-      console.log(this.$store.getters.questionAnswered);
-      this.$store.dispatch('addUserQuestion', this.$store.getters.questionAnswered);
-      
-    }, false)
+    this.sendToDbWhenTabOrBrowserClosed();
+    
   }
 };
 </script>

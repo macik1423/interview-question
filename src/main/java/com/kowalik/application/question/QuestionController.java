@@ -1,11 +1,7 @@
 package com.kowalik.application.question;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-import javax.servlet.ServletException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 //3000 react; 4200 angular; 8081 vue
 @CrossOrigin(origins = "http://localhost:8081" )
@@ -91,6 +88,7 @@ public class QuestionController {
 	}
 
 	@PostMapping("/admin/newQuestion") 
+	@ResponseStatus(value = HttpStatus.CREATED)
 	public Question createQuestion(@RequestBody Question question) {
 		Question createdQuestion = questionService.save(question);
 		
