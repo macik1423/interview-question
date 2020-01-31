@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface UserQuestionRepository extends JpaRepository<UserQuestion, Long>{
 	
 	@Query(value = 
-			"SELECT q.answer, q.description, us.know, t.type " +
+			"SELECT * " +
 			"FROM questions q " + 
 				"LEFT JOIN user_question us " + 
 					"ON us.question_id = q.id " + 

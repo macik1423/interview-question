@@ -81,8 +81,8 @@ export default {
     },
     updateQuestionAnswered(isKnow) {
       let index = this.$store.getters.questionAnswer.findIndex(
-        item => item.userId === localStorage.getItem("userId") && item.questionId === this.question.id)
-      if( index === -1) {
+        item => item.id.userId === localStorage.getItem("userId") && item.id.questionId === this.question.id)
+      if (index === -1) {
         this.$store.commit('addQuestionAnswer',
           {
             id : {
@@ -100,7 +100,7 @@ export default {
         )
       } else {
         let questionAnswerUpdate =  this.$store.getters.questionAnswer.find((item) => {
-          return item.user.id === localStorage.getItem("userId") && item.question.id ===this.question.id;
+          return item.id.userId === localStorage.getItem("userId") && item.id.questionId ===this.question.id;
         })
         questionAnswerUpdate.know = isKnow;
       }

@@ -2,15 +2,13 @@ package com.kowalik.application.user_question;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kowalik.application.question.Question;
 import com.kowalik.application.user.User;
 
@@ -24,6 +22,7 @@ public class UserQuestion implements Serializable {
 	
 	@ManyToOne
 	@MapsId("userId")
+	@JsonIgnore
 	private User user;
 	
 	@ManyToOne

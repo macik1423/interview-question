@@ -17,8 +17,8 @@ export const store = new Vuex.Store({
     countQuestions: 0,
     questionsPagination: [],
     totalPagesPagination: 0,
-    userQuestion: [],
-    questionAnswer: []
+    questionAnswer: [], 
+    userQuestions: [], 
   },
   getters: {
     loggedIn(state) {
@@ -44,6 +44,9 @@ export const store = new Vuex.Store({
     },
     questionAnswer(state) {
       return state.questionAnswer;
+    },
+    userQuestions(state) {
+      return state.userQuestions;
     }
   },
   mutations: {
@@ -84,8 +87,9 @@ export const store = new Vuex.Store({
         answer: question.answer
       })
     },
-    addQuestionAnswer(state, question) {
-      state.questionAnswer.push(question);
+    addQuestionAnswer(state, questionAnswer) {
+      console.log(questionAnswer);
+      state.questionAnswer.push(questionAnswer);
     },
     deleteQuestion(state, id) {
       const index = state.questions.findIndex(item => item.id === id);
@@ -94,8 +98,24 @@ export const store = new Vuex.Store({
     retrieveUsers(state, users) {
       state.users = users;
     }, 
-    retrieveUserQuestions(state) {
-
+    retrieveUserQuestions(state, userQuestions) {
+      //userQuestions jest z geta axiosa z db
+      console.log("questionAnswer ", state.questionAnswer);
+      state.userQuestions = userQuestions;
+      state.questionAnswer.forEach(element => {
+        let index = userQuestions.findIndex(
+          item => {               //to jest number         //to jest string 
+            // console.log("item: ",typeof item.id.userId, typeof element.id.userId, item.id.userId === element.id.userId);
+            // console.log(typeof item.id.questionId, typeof element.id.questionId)
+            return item.id.userId === parseInt(element.id.userId) && item.id.questionId === element.id.questionId
+          })
+        
+        if(index === -1) {
+          state.userQuestions.push(element);
+        } else {
+          state.userQuestions[index].know = element.know;
+        }
+      });
     },
     LOADER(state, payload) {
       state.loader = payload;
@@ -191,14 +211,7 @@ export const store = new Vuex.Store({
     },
 
     addQuestion(context, question) {
-      axios.post('/api/admin/newQuestion', {
-        theme: {
-          id: question.theme.id,
-          type: question.theme.type
-        },
-        description: question.description,
-        answer: question.answer
-      })
+      axios.post('/api/admin/newQuestion', question)
       .then(response => {
         context.commit('addQuestion', response.data)
       })
@@ -206,17 +219,18 @@ export const store = new Vuex.Store({
         console.log(error);
       })
     },
-
-    addUserQuestions(context, userQuestions) {
-      axios.post('/api/userQuestions', userQuestions)
+    
+    addUserQuestions(context, questionAnswer) {
+      axios.post('/api/userQuestions', questionAnswer)
       .then(response => {
-        console.log(context, response);
+        // context.commit('addQuestionAnswer', response.data)
+        console.log(context,response.data);
       })
       .catch(error => {
         console.log(error);
       })
     },
-    
+
     deleteQuestion(context, id) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       axios.delete('/api/admin/questions/'+id)
@@ -239,8 +253,9 @@ export const store = new Vuex.Store({
     },
 
     retrieveUserQuestions(context, userId) {
-      axios.get('/api/userQuestions/' + userId)
+      axios.get('/api/userQuestions/user/' + userId)
       .then(response => {
+        console.log("retrieveUserQuestions",response.data)
         context.commit('retrieveUserQuestions', response.data)
       })
       .catch(error => {
