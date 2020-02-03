@@ -93,7 +93,12 @@ export default {
               id : localStorage.getItem("userId")
             },
             question : {
-              id : this.question.id
+              id : this.question.id,
+              description: this.question.description, 
+              answer: this.question.answer,
+              theme: {
+                type: this.question.theme.type,
+              }
             },
             know : isKnow
           }

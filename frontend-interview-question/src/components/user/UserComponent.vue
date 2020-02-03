@@ -1,15 +1,18 @@
 <template>
   <div>
     <menu-panel></menu-panel>
-    Witaj {{login}}
-    {{userId}}
+    
     <v-data-table
       :headers="headers"
       :items="questions"
       item-key="name"
       class="elevation-1"
     >
-   
+      <!-- zmienia wartosc item.know z bazy danych true -> znam, false -> nie znam -->
+      <template v-slot:item.know="{ item }">
+        <div v-if="item.know">Znam</div>
+        <div v-else>Nie znam</div>
+      </template>
     </v-data-table>
   </div>
 </template>
@@ -28,8 +31,11 @@ export default {
           sortable: false,
           value: 'question.description',
         },
-        { text: 'Odpowiedz', value: 'answer' },
-        { text: 'Rodzaj pytania', value: 'themeType' },
+        { text: 'Odpowiedz', 
+          value: 'question.answer',
+          sortable: false, 
+        },
+        { text: 'Rodzaj pytania', value: 'question.theme.type' },
         { text: 'Wiem/Nie wiem', value: 'know' },
       ],
     }
@@ -39,16 +45,10 @@ export default {
   },
   computed: {
     questions() {
-      console.log("questions",this.$store.getters.userQuestions)
       return this.$store.getters.userQuestions;
     }
   },
-  methods: {
-    getMappedKnowToPl(know) {
-      return know ? "Znam" : "Nie umiem";
-    }
-  },
-  mounted() {
+  created() {
     this.$store.dispatch("retrieveUserQuestions", this.userId);
   }
 }

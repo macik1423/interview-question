@@ -77,15 +77,7 @@ export const store = new Vuex.Store({
     addQuestion(state, question) {
       //pushuje do state zeby mozna bylo od razu uzyc, reaktywnie, wynik od razu widzimy na stronie, gdy jest jeszcze raz 
       //ladowana state sie zeruje a dane sa wczytywane z bazy
-      state.questions.push({
-        id: question.id,
-        theme: {
-          id: question.theme.id,
-          type: question.theme.type
-        },
-        description: question.description,
-        answer: question.answer
-      })
+      state.questions.push(question);
     },
     addQuestionAnswer(state, questionAnswer) {
       console.log(questionAnswer);
@@ -99,19 +91,19 @@ export const store = new Vuex.Store({
       state.users = users;
     }, 
     retrieveUserQuestions(state, userQuestions) {
-      //userQuestions jest z geta axiosa z db
-      console.log("questionAnswer ", state.questionAnswer);
+      // retrieve user question from db and updated with questionAnswer
       state.userQuestions = userQuestions;
+      console.log("state.questionAnswer",state.questionAnswer);
       state.questionAnswer.forEach(element => {
         let index = userQuestions.findIndex(
-          item => {               //to jest number         //to jest string 
-            // console.log("item: ",typeof item.id.userId, typeof element.id.userId, item.id.userId === element.id.userId);
-            // console.log(typeof item.id.questionId, typeof element.id.questionId)
+          item => {            
             return item.id.userId === parseInt(element.id.userId) && item.id.questionId === element.id.questionId
-          })
-        
+          }
+        )
         if(index === -1) {
+          console.log("element",element);
           state.userQuestions.push(element);
+          console.log("userQuestion", state.userQuestions);
         } else {
           state.userQuestions[index].know = element.know;
         }

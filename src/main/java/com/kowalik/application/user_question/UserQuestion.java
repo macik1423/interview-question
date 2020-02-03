@@ -22,7 +22,6 @@ public class UserQuestion implements Serializable {
 	
 	@ManyToOne
 	@MapsId("userId")
-	@JsonIgnore
 	private User user;
 	
 	@ManyToOne

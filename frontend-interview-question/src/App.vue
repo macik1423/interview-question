@@ -14,6 +14,7 @@ export default {
   methods: {
     sendToDbWhenTabOrBrowserClosed() {
       window.addEventListener('beforeunload', () => {
+        console.log("dziala beforeunload")
         this.$store.commit('LOADER',false);
         this.$store.dispatch('addUserQuestions', this.$store.getters.questionAnswer);
       }, false);
