@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class QuestionController {
 	
-	final private int VALUEPAGINATION = 2;
+	final private int VALUEPAGINATION = 50;
 	
 	private QuestionService questionService;
 	

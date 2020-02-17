@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <v-card max-width="600" class="mx-auto" :style="{background: changeColor}">
-      <div class="question-content">
+    <v-card max-width="600" class="mx-auto" >
+      <div class="question-content" v-if="question.theme">
         <div class="title" >
           <v-card-title class="headline" v-text="question.description"></v-card-title>
         </div>
@@ -12,7 +11,6 @@
               <v-card-subtitle v-text="question.description"></v-card-subtitle>
             </div>
           </v-col>
-
           <v-col cols="3">
             <div class="icon">
               <span v-if="question.theme.type == 'JAVA'">
@@ -36,23 +34,22 @@
             </v-flex>
           </v-card-actions>
         </div>
+
+        <v-dialog v-if="selectedQuestion" v-model="selectedQuestion" max-width="500px">
+          <v-card>
+            <v-card-title>
+              <span>{{ selectedQuestion.description }}</span>
+              <v-spacer></v-spacer>
+              <v-menu bottom left></v-menu>
+            </v-card-title>
+            <v-card-text>{{ selectedQuestion.answer }}</v-card-text>
+            <v-card-actions>
+              <v-btn color="primary" text @click="selectedQuestion = false">Zamknij</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
     </v-card>
-
-    <v-dialog v-if="selectedQuestion" v-model="selectedQuestion" max-width="500px">
-      <v-card>
-        <v-card-title>
-          <span>{{ selectedQuestion.description }}</span>
-          <v-spacer></v-spacer>
-          <v-menu bottom left></v-menu>
-        </v-card-title>
-        <v-card-text>{{ selectedQuestion.answer }}</v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" text @click="selectedQuestion = false">Zamknij</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div>
 </template>
 
 <script>
@@ -61,23 +58,20 @@ export default {
     return {
       dialog: false,
       selectedQuestion: null,
-      changeColor: '',
     }
   },
   props: ["question"],
   methods: {
     async know() {
-      this.changeColor = "#8BC34A";
       await this.$emit("changeNameTransition", "know");
       this.updateQuestionAnswered(true);
     },
     async notKnow() {
-      this.changeColor = "#FF5722";
       await this.$emit("changeNameTransition", "notKnow");
       this.updateQuestionAnswered(false);
     },
     removeQuestion() {
-      this.$store.getters.questionsPagination.splice(this.$store.getters.questionsPagination.indexOf(this.question),1);
+      this.$store.commit('spliceQuestionPagination', this.question);
     },
     updateQuestionAnswered(isKnow) {
       let index = this.$store.getters.questionAnswer.findIndex(
@@ -105,7 +99,7 @@ export default {
         )
       } else {
         let questionAnswerUpdate =  this.$store.getters.questionAnswer.find((item) => {
-          return item.id.userId === localStorage.getItem("userId") && item.id.questionId ===this.question.id;
+          return item.id.userId === localStorage.getItem("userId") && item.id.questionId === this.question.id;
         })
         questionAnswerUpdate.know = isKnow;
       }
@@ -119,4 +113,6 @@ export default {
 .icon {
   font-size: 400%;
 }
+
+
 </style>

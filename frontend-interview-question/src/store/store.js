@@ -19,6 +19,7 @@ export const store = new Vuex.Store({
     totalPagesPagination: 0,
     questionAnswer: [], 
     userQuestions: [], 
+    randomQuestionPagination: {}
   },
   getters: {
     loggedIn(state) {
@@ -47,6 +48,9 @@ export const store = new Vuex.Store({
     },
     userQuestions(state) {
       return state.userQuestions;
+    }, 
+    randomQuestionPagination(state) {
+      return state.randomQuestionPagination;
     }
   },
   mutations: {
@@ -71,8 +75,15 @@ export const store = new Vuex.Store({
     retrieveTotalPagesPagination(state, totalPagesPagination) {
       state.totalPagesPagination = totalPagesPagination;
     },
+    retrieveRandomQuestionPagination(state) {
+      state.randomQuestionPagination = state.questionsPagination[Math.floor(Math.random() * state.questionsPagination.length)]
+    },
     retrieveThemes(state, themes) {
       state.themes = themes;
+    },
+    spliceQuestionPagination(state, question) {
+      state.questionsPagination.splice(state.questionsPagination.indexOf(question),1);
+      state.randomQuestionPagination = {}
     },
     addQuestion(state, question) {
       //pushuje do state zeby mozna bylo od razu uzyc, reaktywnie, wynik od razu widzimy na stronie, gdy jest jeszcze raz 
@@ -80,7 +91,6 @@ export const store = new Vuex.Store({
       state.questions.push(question);
     },
     addQuestionAnswer(state, questionAnswer) {
-      console.log(questionAnswer);
       state.questionAnswer.push(questionAnswer);
     },
     deleteQuestion(state, id) {
@@ -93,7 +103,6 @@ export const store = new Vuex.Store({
     retrieveUserQuestions(state, userQuestions) {
       // retrieve user question from db and updated with questionAnswer
       state.userQuestions = userQuestions;
-      console.log("state.questionAnswer",state.questionAnswer);
       state.questionAnswer.forEach(element => {
         let index = userQuestions.findIndex(
           item => {            
@@ -101,9 +110,7 @@ export const store = new Vuex.Store({
           }
         )
         if(index === -1) {
-          console.log("element",element);
           state.userQuestions.push(element);
-          console.log("userQuestion", state.userQuestions);
         } else {
           state.userQuestions[index].know = element.know;
         }
@@ -185,7 +192,7 @@ export const store = new Vuex.Store({
     retrieveQuestionsPagination(context, page) {
       axios.get('/api/questions/pages?page=' + page)
       .then(response => {
-        context.commit('retrieveQuestionsPagination', response.data)
+        context.commit('retrieveQuestionsPagination', response.data);
       })
       .catch(error => {
         console.log(error);
@@ -247,12 +254,13 @@ export const store = new Vuex.Store({
     retrieveUserQuestions(context, userId) {
       axios.get('/api/userQuestions/user/' + userId)
       .then(response => {
-        console.log("retrieveUserQuestions",response.data)
         context.commit('retrieveUserQuestions', response.data)
       })
       .catch(error => {
         console.log(error);
       })
-    }
+    }, 
+
+    
   }
 })

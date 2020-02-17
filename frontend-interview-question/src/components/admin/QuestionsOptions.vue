@@ -1,8 +1,6 @@
 <template>
-  <div id="app">
+  <div>
     <v-app id="inspire">
-      <add-dialog-component></add-dialog-component>
-      
       <v-expansion-panels>
         <v-expansion-panel
           v-for="question in questions"
@@ -15,8 +13,8 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
-
     </v-app>
+    <add-dialog-component></add-dialog-component>
   </div>
 </template>
 
