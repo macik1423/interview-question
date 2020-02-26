@@ -5,13 +5,13 @@
     <v-container>
       <v-spacer class="mb-3"></v-spacer>
       <transition :name = 'name' >
-        <question-component v-if="name === 'know'"  :question = "randomQuestionPagination" @changeNameTransition = 'updateNameTransition($event)'></question-component>
+        <question-component v-if="name === 'know' && randomQuestionPagination !== undefined"  :question = "randomQuestionPagination" @changeNameTransition = 'updateNameTransition($event)'></question-component>
       </transition>
       <transition :name = 'name' >
-        <question-component v-if="name === 'notKnow'" :question = "randomQuestionPagination" @changeNameTransition = 'updateNameTransition($event)'></question-component>
+        <question-component v-if="name === 'notKnow' && randomQuestionPagination!== undefined" :question = "randomQuestionPagination" @changeNameTransition = 'updateNameTransition($event)'></question-component>
       </transition>
       <transition :name = 'name' >
-        <question-component v-if="name === 'list'" :question = "randomQuestionPagination" @changeNameTransition = 'updateNameTransition($event)'></question-component>
+        <question-component v-if="name === 'list' && randomQuestionPagination !== undefined" :question = "randomQuestionPagination" @changeNameTransition = 'updateNameTransition($event)'></question-component>
       </transition>
     </v-container>
     <v-snackbar v-model="snackbar" :timeout="timeout">

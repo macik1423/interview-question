@@ -90,12 +90,25 @@
         >
           <v-icon>mdi-plus-box-multiple-outline</v-icon>
         </v-btn>
+        <v-dialog v-model="dialogPlusMultiple" width="500">
+          <v-card>
+            <div class="container">
+              <div class="large-12 medium-12 small-12 cell">
+                <label>File
+                  <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                </label>
+                <button v-on:click="submitFile()">Submit</button>
+              </div>
+            </div>
+          </v-card>
+        </v-dialog>
       </v-speed-dial>
     </v-card>
   
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -109,6 +122,7 @@ export default {
         id: 0,
         type:'',
       },
+      file:''
     }
   },
   computed: {
@@ -134,6 +148,29 @@ export default {
         type:'',
       };
     }, 
+    submitFile() {
+      let formData = new FormData();
+      formData.append('csvFile', this.file);
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token;
+      let self = this;
+      axios.post("/api/admin/newQuestions/upload",
+        formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        }).then(function(response) {
+          let questions = response.data;
+          for(let i = 0; i < questions.length; i++) {
+            self.$store.commit("addQuestion", questions[i]);
+          }
+          console.log("Success!");
+        }).catch(function(error) {
+          console.log(error)
+        })
+    },
+    handleFileUpload() {
+      this.file = this.$refs.file.files[0];
+    }
   },
   created() {
     this.$store.dispatch('retrieveThemes');

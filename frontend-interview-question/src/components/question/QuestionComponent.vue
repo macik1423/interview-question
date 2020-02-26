@@ -1,10 +1,9 @@
 <template>
-    <v-card max-width="600" class="mx-auto" >
+    <v-card max-width="600" class="mx-auto">
       <div class="question-content" v-if="question.theme">
         <div class="title" >
           <v-card-title class="headline" v-text="question.description"></v-card-title>
         </div>
-
         <v-row>
           <v-col cols="9">
             <div class="subtitle">

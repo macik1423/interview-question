@@ -210,6 +210,7 @@ export const store = new Vuex.Store({
     },
 
     addQuestion(context, question) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       axios.post('/api/admin/newQuestion', question)
       .then(response => {
         context.commit('addQuestion', response.data)
@@ -218,11 +219,10 @@ export const store = new Vuex.Store({
         console.log(error);
       })
     },
-    
+
     addUserQuestions(context, questionAnswer) {
       axios.post('/api/userQuestions', questionAnswer)
       .then(response => {
-        // context.commit('addQuestionAnswer', response.data)
         console.log(context,response.data);
       })
       .catch(error => {
