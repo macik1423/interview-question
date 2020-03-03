@@ -46,11 +46,10 @@
                         v-model="selectedTheme"
                         item-text="type"
                         return-object
-                        filled
                         label="Kategoria"
                       ></v-select>
                     </v-col>
-                    <v-col cols="12" md="4">
+                    <v-col md="12">
                       <v-text-field
                         v-model="description"
                         label="Opis"
@@ -58,7 +57,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col md="10">
+                    <v-col md="12">
                       <v-textarea
                         v-model="answer"
                         label="Odpowiedz"
@@ -91,15 +90,12 @@
           <v-icon>mdi-plus-box-multiple-outline</v-icon>
         </v-btn>
         <v-dialog v-model="dialogPlusMultiple" width="500">
-          <v-card>
-            <div class="container">
-              <div class="large-12 medium-12 small-12 cell">
-                <label>File
-                  <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-                </label>
-                <button v-on:click="submitFile()">Submit</button>
-              </div>
-            </div>
+          <v-card
+            class="px-5 py-5"
+            max-width="500"
+            > 
+            <v-file-input v-model="file" show-size counter label="Wybierz plik csv"></v-file-input>
+            <v-btn @click="submitFile()">Wyslij</v-btn>
           </v-card>
         </v-dialog>
       </v-speed-dial>
@@ -122,14 +118,13 @@ export default {
         id: 0,
         type:'',
       },
-      file:''
+      file:[]
     }
   },
   computed: {
     themes() {
       return this.$store.getters.themes;
     },
-    
   },
   methods: {
     addQuestion() {
@@ -168,9 +163,6 @@ export default {
           console.log(error)
         })
     },
-    handleFileUpload() {
-      this.file = this.$refs.file.files[0];
-    }
   },
   created() {
     this.$store.dispatch('retrieveThemes');

@@ -96,6 +96,7 @@ export const store = new Vuex.Store({
     deleteQuestion(state, id) {
       const index = state.questions.findIndex(item => item.id === id);
       state.questions.splice(index, 1);
+      state.questionAnswer.splice(index, 1);
     },
     retrieveUsers(state, users) {
       state.users = users;
@@ -261,6 +262,12 @@ export const store = new Vuex.Store({
       })
     }, 
 
-    
+    updateQuestion(context, id, question) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      axios.put('/api/admin/questions/' + id, question)
+      .then(response => {
+        console.log(response);
+      })
+    }
   }
 })

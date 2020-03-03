@@ -1,60 +1,52 @@
 <template>
-  <div id="app">
-    <v-app id="inspire">
-      <menu-panel></menu-panel>
-      <v-card>
-        <v-card-title class="text-center justify-center py-6">
-          <h1 class="font-weight-bold display-1 indigo--text">Admin panel</h1>
-        </v-card-title>
-    
-        <v-tabs
-          v-model="activeTab"
-          background-color="transparent"
-          color="indigo"
-          grow
-        >
-          <v-tab 
-            v-for="tab in tabs" 
-            :key="tab.index" 
-            :to="tab.route">
-            {{ tab.name }}
-          </v-tab>
-
-        </v-tabs>
-    
-        <v-tabs-items v-model="activeTab">
-          <v-tab-item v-for="tab in tabs" :key="tab.id" :id="tab.id">
-            <router-view></router-view>
-          </v-tab-item>
-        </v-tabs-items>
-      </v-card>
-    </v-app>
+  <div>
+    <menu-panel></menu-panel>
+    <v-card class="mx-12 mt-6">
+      <v-toolbar flat color="indigo" dark>
+        <v-toolbar-title>Panel admina</v-toolbar-title>
+      </v-toolbar>
+      <v-tabs vertical>
+        <v-tab>
+          <v-icon left>mdi-account</v-icon>
+          Users
+        </v-tab>
+        <v-tab>
+          <v-icon left>mdi-library-books</v-icon>
+          Pytania
+        </v-tab>
+        <v-tab-item>
+          <v-card flat>
+            <v-card-text>
+              <users-options></users-options>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card flat>
+            <v-card-text>
+              <questions-options></questions-options>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+      </v-tabs>
+    </v-card>
   </div>
 </template>
 
 <script>
 import MenuPanel from '../../components/MenuPanel.vue';
+import UsersOptions from './UsersOptions.vue';
+import QuestionsOptions from './QuestionsOptions.vue';
 export default {
   data () {
     return {
-      activeTab: null,
-      tabs: [
-        { route: "questions", id: "questions", name: "Pytania"},
-        { route: "users", id: "users", name: "Uzytkownicy"}
-      ]
+      
     }
   },
   components: {
     MenuPanel,
+    UsersOptions,
+    QuestionsOptions,
   },
 }
 </script>
-
-<style scoped>
-.basil {
-  background-color: #FFFBE6 !important;
-}
-.basil--text {
-  color: indigo !important;
-}
-</style>

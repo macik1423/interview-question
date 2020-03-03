@@ -2,7 +2,7 @@
     <v-card max-width="600" class="mx-auto">
       <div class="question-content" v-if="question.theme">
         <div class="title" >
-          <v-card-title class="headline" v-text="question.description"></v-card-title>
+          <v-card-title class="headline" v-text="question.theme.type"></v-card-title>
         </div>
         <v-row>
           <v-col cols="9">
@@ -57,6 +57,7 @@ export default {
     return {
       dialog: false,
       selectedQuestion: null,
+      valid: false,
     }
   },
   props: ["question"],
@@ -78,22 +79,22 @@ export default {
       if (index === -1) {
         this.$store.commit('addQuestionAnswer',
           {
-            id : {
-              userId : localStorage.getItem("userId"),
-              questionId : this.question.id
+            id: {
+              userId: localStorage.getItem("userId"),
+              questionId: this.question.id
             },
-            user : {
-              id : localStorage.getItem("userId")
+            user: {
+              id: localStorage.getItem("userId")
             },
-            question : {
-              id : this.question.id,
+            question: {
+              id: this.question.id,
               description: this.question.description, 
               answer: this.question.answer,
               theme: {
                 type: this.question.theme.type,
               }
             },
-            know : isKnow
+            know: isKnow
           }
         )
       } else {
@@ -112,6 +113,4 @@ export default {
 .icon {
   font-size: 400%;
 }
-
-
 </style>
