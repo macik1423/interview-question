@@ -3,6 +3,8 @@
 Apke stworzylem na wlasne potrzeby w celu przygotowania sie na rozmowe kwalifikacyjna oraz aby poznac nowe technologie.
 Jest to taki tinder z pytaniami rekrutacyjnymi. Backend zrobiony w spring boot, hibernate, front vue.js, vuetify, postgresql.
 
+![Interview-question demo](demo/demo.webm)
+
 Aplikacja umozliwia:
 - zalogowanie, wylogowanie,
 - osobny panel admina a w nim:
