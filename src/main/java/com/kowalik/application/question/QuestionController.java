@@ -96,8 +96,7 @@ public class QuestionController {
 	@PostMapping("/admin/newQuestion") 
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public Question createQuestion(@RequestBody Question question) {
-		Question createdQuestion = questionService.save(question);
-		return createdQuestion;
+		return questionService.save(question);
 	}
 	
 	@PostMapping(value = "/admin/newQuestions/upload")
@@ -110,6 +109,4 @@ public class QuestionController {
 		redirectAttributes.addFlashAttribute("message", "file upload successful");
 		return createdQuestions;
 	}
-
-	
 }

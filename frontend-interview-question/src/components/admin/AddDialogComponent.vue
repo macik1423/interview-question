@@ -28,7 +28,7 @@
           fab
           @click.stop="dialogPlus = true"
         >
-          <v-icon>mdi-plus</v-icon>
+          <v-icon>mdi-plus-one</v-icon>
         </v-btn>
         <v-dialog v-model="dialogPlus" width="500">
           <v-card>
@@ -37,42 +37,47 @@
             </v-card-title>
 
             <v-card-text>
-              <v-form v-model="valid">
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" md="4">
-                      <v-select
-                        :items="themes"
-                        v-model="selectedTheme"
-                        item-text="type"
-                        return-object
-                        label="Kategoria"
-                      ></v-select>
-                    </v-col>
-                    <v-col md="12">
-                      <v-text-field
-                        v-model="description"
-                        label="Opis"
-                        required
-                      ></v-text-field>
-                    </v-col>
+              <form>
+                <v-row>
+                  <v-col cols="12" md="4">
+                    <v-select
+                      :items="themes"
+                      v-model="selectedTheme"
+                      :error-messages="selectErrors"
+                      item-text="type"
+                      return-object
+                      label="Kategoria"
+                      required
+                      @change="$v.selectedTheme.$touch()"
+                      @blur="$v.selectedTheme.$touch()"
+                    ></v-select>
+                  </v-col>
+                  <v-col md="12">
+                    <v-text-field
+                      v-model="description"
+                      :error-messages="descriptionErrors"
+                      label="Opis"
+                      required
+                      @input="$v.description.$touch()"
+                      @blur="$v.description.$touch()"
+                    ></v-text-field>
+                  </v-col>
 
-                    <v-col md="12">
-                      <v-textarea
-                        v-model="answer"
-                        label="Odpowiedz"
-                        required
-                      ></v-textarea>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-form>
+                  <v-col md="12">
+                    <v-textarea
+                      v-model="answer"
+                      :error-messages="answerErrors"
+                      label="Odpowiedz"
+                      required
+                      @input="$v.answer.$touch()"
+                      @blur="$v.answer.$touch()"
+                    ></v-textarea>
+                  </v-col>
+                </v-row>
+              </form>
             </v-card-text>
 
-            <v-divider></v-divider>
-
             <v-card-actions>
-              <v-spacer></v-spacer>
               <v-btn color="primary" text @click="dialog = false">
                 <v-btn @click="addQuestion">Dodaj</v-btn>
               </v-btn>
@@ -87,7 +92,7 @@
           fab
           @click.stop = "dialogPlusMultiple = true"
         >
-          <v-icon>mdi-plus-box-multiple-outline</v-icon>
+          <v-icon>mdi-numeric-9-plus-box-multiple-outline</v-icon>  
         </v-btn>
         <v-dialog v-model="dialogPlusMultiple" width="500">
           <v-card
@@ -104,44 +109,72 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
 import axios from 'axios';
+
 export default {
+  mixins: [validationMixin],
+
+  validations: {
+    description: { required },
+    selectedTheme: { required },
+    answer: { required }
+  },
+
   data() {
     return {
       fab: false,
       description: '',
       answer: '',
-      valid: false,
       dialogPlus: false,
       dialogPlusMultiple: false,
-      selectedTheme: {
-        id: 0,
-        type:'',
-      },
-      file:[]
+      selectedTheme: {},
+      file:[],
     }
   },
   computed: {
     themes() {
       return this.$store.getters.themes;
     },
+    descriptionErrors() {
+      const errors = [];
+      if (!this.$v.description.$dirty) return errors;
+      !this.$v.description.required && errors.push('Opis jest wymagany');
+      return errors;
+    },
+    answerErrors() {
+      const errors = [];
+      if (!this.$v.answer.$dirty) return errors;
+      !this.$v.answer.required && errors.push('Opis jest wymagany');
+      return errors;
+    },
+    selectErrors () {
+      const errors = [];
+      if (!this.$v.selectedTheme.$dirty) return errors;
+      !this.$v.selectedTheme.required && errors.push('Wybierz język');
+      return errors;
+    },
   },
   methods: {
     addQuestion() {
-      this.$store.dispatch('addQuestion', {
-        theme: {
-          id: this.selectedTheme.id,
-          type: this.selectedTheme.type
-        },
-        description: this.description,
-        answer: this.answer
-      })
-      this.description = '';
-      this.answer = '';
-      this.selectedTheme = {
-        id: 0,
-        type:'',
-      };
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.$store.dispatch('addQuestion', {
+          theme: {
+            id: this.selectedTheme.id,
+            type: this.selectedTheme.type
+          },
+          description: this.description,
+          answer: this.answer
+        })
+        this.description = '';
+        this.answer = '';
+        this.selectedTheme = {};
+        this.dialogPlus = false;
+        this.$v.$reset();
+      }
+      
     }, 
     submitFile() {
       let formData = new FormData();
@@ -161,7 +194,8 @@ export default {
           console.log("Success!");
         }).catch(function(error) {
           console.log(error)
-        })
+        }
+      )
     },
   },
   created() {

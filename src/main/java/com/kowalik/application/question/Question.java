@@ -32,10 +32,10 @@ public class Question implements Comparable<Question>, Serializable{
 	@JoinColumn(name = "theme_id")
 	private Theme theme;
 	
-	@Column(name = "description")
+	@Column(name = "description", columnDefinition="varchar(2000)")
 	private String description;
 	
-	@Column(name = "answer")
+	@Column(name = "answer", columnDefinition="varchar(2000)")
 	private String answer;
 	
 	//cascade jesli usuniete zostanie question wtedy usuniete zostanie user_question
