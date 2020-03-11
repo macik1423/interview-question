@@ -46,4 +46,9 @@ public class Theme implements Serializable{
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return "Theme [id=" + id + ", type=" + type + "]";
+	}
+	
 }

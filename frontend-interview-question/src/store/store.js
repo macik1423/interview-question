@@ -17,8 +17,9 @@ export const store = new Vuex.Store({
     countQuestions: 0,
     questionsPagination: [],
     totalPagesPagination: 0,
-    userQuestion: [],
-    questionAnswer: []
+    questionAnswer: [], 
+    userQuestions: [], 
+    randomQuestionPagination: {}
   },
   getters: {
     loggedIn(state) {
@@ -44,6 +45,12 @@ export const store = new Vuex.Store({
     },
     questionAnswer(state) {
       return state.questionAnswer;
+    },
+    userQuestions(state) {
+      return state.userQuestions;
+    }, 
+    randomQuestionPagination(state) {
+      return state.randomQuestionPagination;
     }
   },
   mutations: {
@@ -68,34 +75,47 @@ export const store = new Vuex.Store({
     retrieveTotalPagesPagination(state, totalPagesPagination) {
       state.totalPagesPagination = totalPagesPagination;
     },
+    retrieveRandomQuestionPagination(state) {
+      state.randomQuestionPagination = state.questionsPagination[Math.floor(Math.random() * state.questionsPagination.length)]
+    },
     retrieveThemes(state, themes) {
       state.themes = themes;
+    },
+    spliceQuestionPagination(state, question) {
+      state.questionsPagination.splice(state.questionsPagination.indexOf(question),1);
+      state.randomQuestionPagination = {}
     },
     addQuestion(state, question) {
       //pushuje do state zeby mozna bylo od razu uzyc, reaktywnie, wynik od razu widzimy na stronie, gdy jest jeszcze raz 
       //ladowana state sie zeruje a dane sa wczytywane z bazy
-      state.questions.push({
-        id: question.id,
-        theme: {
-          id: question.theme.id,
-          type: question.theme.type
-        },
-        description: question.description,
-        answer: question.answer
-      })
+      state.questions.push(question);
     },
-    addQuestionAnswer(state, question) {
-      state.questionAnswer.push(question);
+    addQuestionAnswer(state, questionAnswer) {
+      state.questionAnswer.push(questionAnswer);
     },
     deleteQuestion(state, id) {
       const index = state.questions.findIndex(item => item.id === id);
       state.questions.splice(index, 1);
+      state.questionAnswer.splice(index, 1);
     },
     retrieveUsers(state, users) {
       state.users = users;
     }, 
-    retrieveUserQuestions(state) {
-
+    retrieveUserQuestions(state, userQuestions) {
+      // retrieve user question from db and updated with questionAnswer
+      state.userQuestions = userQuestions;
+      state.questionAnswer.forEach(element => {
+        let index = userQuestions.findIndex(
+          item => {            
+            return item.id.userId === parseInt(element.id.userId) && item.id.questionId === element.id.questionId
+          }
+        )
+        if(index === -1) {
+          state.userQuestions.push(element);
+        } else {
+          state.userQuestions[index].know = element.know;
+        }
+      });
     },
     LOADER(state, payload) {
       state.loader = payload;
@@ -173,7 +193,7 @@ export const store = new Vuex.Store({
     retrieveQuestionsPagination(context, page) {
       axios.get('/api/questions/pages?page=' + page)
       .then(response => {
-        context.commit('retrieveQuestionsPagination', response.data)
+        context.commit('retrieveQuestionsPagination', response.data);
       })
       .catch(error => {
         console.log(error);
@@ -191,14 +211,8 @@ export const store = new Vuex.Store({
     },
 
     addQuestion(context, question) {
-      axios.post('/api/admin/newQuestion', {
-        theme: {
-          id: question.theme.id,
-          type: question.theme.type
-        },
-        description: question.description,
-        answer: question.answer
-      })
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      axios.post('/api/admin/newQuestion', question)
       .then(response => {
         context.commit('addQuestion', response.data)
       })
@@ -207,16 +221,16 @@ export const store = new Vuex.Store({
       })
     },
 
-    addUserQuestions(context, userQuestions) {
-      axios.post('/api/userQuestions', userQuestions)
+    addUserQuestions(context, questionAnswer) {
+      axios.post('/api/userQuestions', questionAnswer)
       .then(response => {
-        console.log(context, response);
+        console.log(context,response.data);
       })
       .catch(error => {
         console.log(error);
       })
     },
-    
+
     deleteQuestion(context, id) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       axios.delete('/api/admin/questions/'+id)
@@ -239,12 +253,20 @@ export const store = new Vuex.Store({
     },
 
     retrieveUserQuestions(context, userId) {
-      axios.get('/api/userQuestions/' + userId)
+      axios.get('/api/userQuestions/user/' + userId)
       .then(response => {
         context.commit('retrieveUserQuestions', response.data)
       })
       .catch(error => {
         console.log(error);
+      })
+    }, 
+
+    updateQuestion(context, id, question) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      axios.put('/api/admin/questions/' + id, question)
+      .then(response => {
+        console.log(response);
       })
     }
   }

@@ -32,19 +32,26 @@ public class Question implements Comparable<Question>, Serializable{
 	@JoinColumn(name = "theme_id")
 	private Theme theme;
 	
-	@Column(name = "description")
+	@Column(name = "description", columnDefinition="varchar(2000)")
 	private String description;
 	
-	@Column(name = "answer")
+	@Column(name = "answer", columnDefinition="varchar(2000)")
 	private String answer;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	//cascade jesli usuniete zostanie question wtedy usuniete zostanie user_question
+	@OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
 	private List<UserQuestion> userQuestions = new ArrayList<>();
 	
 	public Question() {
 		
 	}
 
+	public Question(Theme theme, String description, String answer) {
+		this.theme = theme;
+		this.description = description;
+		this.answer = answer;
+	}
+	
 	public Question(long id, Theme theme, String description, String answer) {
 		this.id = id;
 		this.theme = theme;

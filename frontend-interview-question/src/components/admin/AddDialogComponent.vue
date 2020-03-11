@@ -1,111 +1,48 @@
 <template>
-  <div class="text-center">
-    <v-dialog v-model="dialog" width="500">
-      <template v-slot:activator="{ on: onTooltip }">
-        <v-col cols="12" sm="12" md="6" offset-md="3">
-          <v-tooltip left>
-            <template v-slot:activator="{ on: onAdd}">
-              <v-btn class="mx-2 mb-10" fab dark color="indigo" v-on="{...onTooltip, ...onAdd}" absolute bottom right fixed>
-                <v-icon dark>mdi-plus</v-icon>
-              </v-btn>
-            </template>
-            <span>Dodaj pytanie</span>
-          </v-tooltip>
-        </v-col>
-        
-      </template>
-
-      <v-card>
-        <v-card-title class="headline grey lighten-2" primary-title>
-          Dodaj pytanie
-        </v-card-title>
-
-        <v-card-text>
-          <v-form v-model="valid">
-            <v-container>
-              <v-row>
-                <v-col cols="12" md="4">
-                  <v-select
-                    :items="themes"
-                    v-model="selectedTheme"
-                    item-text="type"
-                    return-object
-                    filled
-                    label="Kategoria"
-                  ></v-select>
-                </v-col>
-                <v-col cols="12" md="4">
-                  <v-text-field
-                    v-model="description"
-                    label="Opis"
-                    required
-                  ></v-text-field>
-                </v-col>
-
-                <v-col md="10">
-                  <v-textarea
-                    v-model="answer"
-                    label="Odpowiedz"
-                    required
-                  ></v-textarea>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="dialog = false">
-            <v-btn @click="addQuestion">Dodaj</v-btn>
+    <v-card id="create">
+      <v-speed-dial
+        v-model="fab"
+        bottom
+        right
+        direction="top"
+        fixed
+        class="mx-2"
+        transition="slide-y-reverse-transition"
+      >
+        <template v-slot:activator>
+          <v-btn
+            v-model="fab"
+            color="blue darken-2"
+            dark
+            fab
+          >
+            <v-icon v-if="fab">mdi-close</v-icon>
+            <v-icon v-else>mdi-pencil</v-icon>
           </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div>
+        </template>
+        <add-one-question></add-one-question>
+        <add-multiple-questions></add-multiple-questions>
+      </v-speed-dial>
+    </v-card>
+  
 </template>
 
 <script>
+import AddOneQuestion from "./AddOneQuestion.vue";
+import AddMultipleQuestions from "./AddMultipleQuestions.vue";
 export default {
   data() {
     return {
-      description: '',
-      answer: '',
-      valid: false,
-      dialog: false,
-      selectedTheme: {
-        id: 0,
-        type:'',
-      },
+      fab: false,
     }
   },
-  computed: {
-    themes() {
-      return this.$store.getters.themes;
-    }
+  components: {
+    AddOneQuestion,
+    AddMultipleQuestions
   },
-  methods: {
-    addQuestion() {
-      this.$store.dispatch('addQuestion', {
-        theme: {
-          id: this.selectedTheme.id,
-          type: this.selectedTheme.type
-        },
-        description: this.description,
-        answer: this.answer
-      })
-      this.description = '';
-      this.answer = '';
-      this.selectedTheme = {
-        id: 0,
-        type:'',
-      };
-    }, 
-  },
-  created() {
-    this.$store.dispatch('retrieveThemes');
-  }
 }
 </script>
+
+<style scoped>
+
+</style>

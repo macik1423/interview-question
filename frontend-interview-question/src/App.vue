@@ -16,7 +16,7 @@ export default {
       window.addEventListener('beforeunload', () => {
         this.$store.commit('LOADER',false);
         this.$store.dispatch('addUserQuestions', this.$store.getters.questionAnswer);
-      }, false)
+      }, false);
     }
   },
   created() {
@@ -37,7 +37,7 @@ export default {
     });
 
     this.sendToDbWhenTabOrBrowserClosed();
-    
-  }
+  },
+
 };
 </script>
