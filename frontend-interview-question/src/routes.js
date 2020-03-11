@@ -3,8 +3,8 @@ import VueRouter from 'vue-router';
 import { store } from './store/store';
 import Home from "./components/Home";
 import AdminComponent from "./components/admin/AdminComponent";
-import QuestionsOptions from "./components/admin/QuestionsOptions";
-import UsersOptions from "./components/admin/UsersOptions";
+// import Questions from "./components/admin/Questions";
+// import UsersOptions from "./components/admin/UsersOptions";
 import Login from "./components/auth/Login";
 import Logout from "./components/auth/Logout";
 import About from "./components/About";
@@ -24,22 +24,22 @@ const router = new VueRouter({
             meta: {
                 requiresAdmin: true
             },
-            children : [
-                {
-                    path:'/questions', 
-                    component: QuestionsOptions,
-                    meta: {
-                        requiresAdmin: true
-                    }
-                },
-                {
-                    path:'/users', 
-                    component: UsersOptions,
-                    meta: {
-                        requiresAdmin: true
-                    }
-                }
-            ]
+            // children : [
+            //     {
+            //         path:'/questions', 
+            //         component: Questions,
+            //         meta: {
+            //             requiresAdmin: true
+            //         }
+            //     },
+            //     {
+            //         path:'/users', 
+            //         component: UsersOptions,
+            //         meta: {
+            //             requiresAdmin: true
+            //         }
+            //     }
+            // ]
         },
         {
             path:"/login",

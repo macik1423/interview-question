@@ -24,7 +24,7 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <questions-options></questions-options>
+              <questions></questions>
             </v-card-text>
           </v-card>
         </v-tab-item>
@@ -36,7 +36,7 @@
 <script>
 import MenuPanel from '../../components/MenuPanel.vue';
 import UsersOptions from './UsersOptions.vue';
-import QuestionsOptions from './QuestionsOptions.vue';
+import Questions from './Questions.vue';
 export default {
   data () {
     return {
@@ -46,7 +46,7 @@ export default {
   components: {
     MenuPanel,
     UsersOptions,
-    QuestionsOptions,
+    Questions,
   },
 }
 </script>
